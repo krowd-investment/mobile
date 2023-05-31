@@ -8,7 +8,7 @@ import 'package:krowd_invesment_footer/pages/investment/invest.dart';
 import 'package:krowd_invesment_footer/pages/person/person.dart';
 import 'package:krowd_invesment_footer/pages/wallet/wallet.dart';
 
-import 'const.dart';
+import 'config/const.dart';
 
 void main() {
   runApp(const MyApp());

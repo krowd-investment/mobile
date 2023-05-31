@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:krowd_invesment_footer/const.dart';
+import 'package:krowd_invesment_footer/config/const.dart';
 import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
 import 'package:krowd_invesment_footer/config/ultility.dart';
