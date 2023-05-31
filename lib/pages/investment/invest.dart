@@ -11,14 +11,14 @@ class Invest extends StatelessWidget {
       padding: EdgeInsets.all(24.0),
       child:  Column(
         children: [
-          Text('Invest page', style: TextStyle(fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),),
+          Text('Invest page', style: TextStyle(fontSize: 40, color: Colors.blue, fontWeight: FontWeight.bold),),
           SizedBox(height: 100),
           CircleAvatar(
             radius: 70,
             child: Icon(MyHomePage.bitcoin, size: 129,),
           ),
            SizedBox(height: 100,),
-           Text('Invest page Content', style: TextStyle(fontSize: 30, color: Colors.white),),
+           Text('Invest page Content', style: TextStyle(fontSize: 30, color: Colors.blue),),
         ],
       ),
     );

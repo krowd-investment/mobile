@@ -1,11 +1,14 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:krowd_invesment_footer/pages/notifications.dart';
-import 'package:krowd_invesment_footer/pages/home.dart';
-import 'package:krowd_invesment_footer/pages/invest.dart';
-import 'package:krowd_invesment_footer/pages/person.dart';
-import 'package:krowd_invesment_footer/pages/wallet.dart';
+import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:krowd_invesment_footer/pages/history/history.dart';
+import 'package:krowd_invesment_footer/pages/home/home.dart';
+import 'package:krowd_invesment_footer/pages/investment/invest.dart';
+import 'package:krowd_invesment_footer/pages/person/person.dart';
+import 'package:krowd_invesment_footer/pages/wallet/wallet.dart';
+
+import 'const.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,21 +24,6 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -59,26 +47,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int index = 2;
-
   final items = const [
     Icon(
       Icons.home,
+      color: Colors.white,
       size: 30,
     ),
     Icon(
       Icons.notifications,
+      color: Colors.white,
       size: 30,
     ),
     Icon(
       MyHomePage.bitcoin,
+      color: Colors.white,
       size: 30,
     ),
     Icon(
       Icons.wallet,
+      color: Colors.white,
       size: 30,
     ),
     Icon(
       Icons.person,
+      color: Colors.white,
       size: 30,
     ),
   ];
@@ -86,41 +78,48 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.menu),
-          color: Colors.white,
-          onPressed: () {},
-      ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.search,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // do something
-            },
-          ),
+      bottomNavigationBar: SnakeNavigationBar.color(
+        behaviour: SnakeBarBehaviour.floating,
+        snakeShape: SnakeShape.circle,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
+        padding: const EdgeInsets.all(16),
+        currentIndex: index,
+        backgroundColor: secondaryColor,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        height: 72,
+        snakeViewColor: primaryColor,
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Iconsax.home),
+              activeIcon: Icon(Iconsax.home),
+              label: 'home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.history),
+              activeIcon: Icon(Icons.history),
+              label: 'notification'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.currency_bitcoin),
+              activeIcon: Icon(Icons.currency_bitcoin),
+              label: 'invest'),
+          BottomNavigationBarItem(
+              icon: Icon(Iconsax.wallet),
+              activeIcon: Icon(Iconsax.wallet),
+              label: 'wallet'),
+          BottomNavigationBarItem(
+              icon: Icon(Iconsax.profile_add),
+              activeIcon: Icon(Iconsax.profile_add),
+              label: 'user')
         ],
-        backgroundColor: Colors.blue[300],
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        items: items,
-        index: index,
         onTap: (selectedIndex) {
           setState(() {
             index = selectedIndex;
           });
         },
-        height: 70,
-        backgroundColor: Colors.blue,
-        animationDuration: const Duration(milliseconds: 300),
       ),
+      
       body: Container(
-          color: Colors.blue,
+          color: Colors.white,
           width: double.infinity,
           height: double.infinity,
           alignment: Alignment.center,
@@ -135,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
         widget = const Home();
         break;
       case 1:
-        widget = const Notifications();
+        widget = const History();
         break;
       case 2:
         widget = const Invest();
