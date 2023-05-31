@@ -29,7 +29,7 @@ In the first checkpoint, I will create floating footer and sidebar menu for appl
 
 
 ## Screenshots
-![Build Progress](https://github.com/krowd-investment/mobile/screenshots/home.png)
+![Build Progress](https://github.com/krowd-investment/mobile/blob/main/screenshots/home.png)
 
 
 
