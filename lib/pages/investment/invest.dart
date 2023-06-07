@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:krowd_invesment_footer/main.dart';
 
 class Invest extends StatelessWidget {
 
@@ -15,7 +14,7 @@ class Invest extends StatelessWidget {
           SizedBox(height: 100),
           CircleAvatar(
             radius: 70,
-            child: Icon(MyHomePage.bitcoin, size: 129,),
+            child: Icon(Icons.currency_bitcoin, size: 129,),
           ),
            SizedBox(height: 100,),
            Text('Invest page Content', style: TextStyle(fontSize: 30, color: Colors.blue),),

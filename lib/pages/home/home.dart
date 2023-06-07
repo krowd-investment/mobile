@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:krowd_invesment_footer/config/const.dart';
+import 'package:krowd_invesment_footer/config/ultility.dart';
 import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
-import 'package:krowd_invesment_footer/config/ultility.dart';
+import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -23,6 +24,15 @@ class _MyHomePageState extends State<Home> {
               _header(),
               _wallet(),
               _mywallet(),
+              GestureDetector(onTap: () {
+                    AuthController.instance.logout();
+                  },
+                  child: const Text("Sign in",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                          ),),
               _menu(),
               _portfolio(),
               _watchlist(),
@@ -208,7 +218,7 @@ Container _mywallet() {
               )
             ],
           ),
-          Container(
+          SizedBox(
             height: 142,
             child: ListView.builder(
               shrinkWrap: true,
@@ -311,7 +321,7 @@ Container _mywallet() {
               )
             ],
           ),
-          Container(
+          SizedBox(
             height: 142,
             child: ListView.builder(
               shrinkWrap: true,
@@ -422,7 +432,7 @@ Container _mywallet() {
               onTap: () {},
               child: Container(
                 padding: const EdgeInsets.all(12),
-                margin: EdgeInsets.only(top: 12),
+                margin: const EdgeInsets.only(top: 12),
                 decoration: BoxDecoration(
                     color: Colors.black.withOpacity(0.04),
                     borderRadius: BorderRadius.circular(12)),

@@ -1,6 +1,6 @@
-import 'package:krowd_invesment_footer/domain/repository/wallet_type_repo/models/wallet_typeDTO.dart';
+import 'package:krowd_invesment_footer/domain/repository/wallet_type_repo/models/wallet_type_dto.dart';
 
-import '../domain/repository/wallet_repo/models/walletDTO.dart';
+import '../domain/repository/wallet_repo/models/wallet_dto.dart';
 
 List<WalletDTO> walletList = [
   WalletDTO(

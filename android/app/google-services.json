@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "526397080002",
+    "firebase_url": "https://fun-fund-7b641-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "fun-fund-7b641",
+    "storage_bucket": "fun-fund-7b641.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:526397080002:android:bd02a948d67e334433165b",
+        "android_client_info": {
+          "package_name": "com.example.krowd_invesment_footer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5ntqVfzEkD1bjkjGuVfq5bwLfFMaYz9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

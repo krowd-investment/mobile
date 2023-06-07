@@ -10,14 +10,14 @@ class History extends StatelessWidget {
       padding: EdgeInsets.all(24.0),
       child:  Column(
         children: [
-          Text('Notification page', style: TextStyle(fontSize: 40, color: Colors.blue, fontWeight: FontWeight.bold),),
+          Text('History investment page', style: TextStyle(fontSize: 40, color: Colors.blue, fontWeight: FontWeight.bold),),
           SizedBox(height: 100),
           CircleAvatar(
             radius: 70,
             child: Icon(Icons.history, size: 129,),
           ),
            SizedBox(height: 100,),
-           Text('Notification page Content', style: TextStyle(fontSize: 30, color: Colors.blue),),
+           Text('Lịch sử đầu tư', style: TextStyle(fontSize: 30, color: Colors.blue),),
         ],
       ),
     );
