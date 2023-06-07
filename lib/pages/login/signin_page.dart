@@ -42,8 +42,6 @@ class SignInPage extends StatelessWidget {
   //   });
   // }
 
-    
-
   @override
   Widget build(BuildContext context) {
     var emailController = TextEditingController();
@@ -147,9 +145,17 @@ class SignInPage extends StatelessWidget {
                     Expanded(
                       child: Container(),
                     ),
-                    const Text("Forget password",
+                    GestureDetector(
+                      onTap: () {
+                        AuthController.instance
+                            .forgetPassword(emailController.text);
+                      },
+                      child: const Text(
+                        "Forget password",
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ],
                 )
               ],
@@ -169,7 +175,8 @@ class SignInPage extends StatelessWidget {
             child: Center(
               child: GestureDetector(
                 onTap: () {
-                  AuthController.instance.login(emailController.toString().trim(), passwordController.toString().trim());
+                  AuthController.instance
+                      .login(emailController.text, passwordController.text);
                 },
                 child: const Text(
                   "Sign in",

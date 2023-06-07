@@ -25,6 +25,7 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const SignInPage());
     } else {
+      print(user.email);
       Get.offAll(() => DashBoard(email:user.email));
     }
   }
@@ -53,10 +54,9 @@ class AuthController extends GetxController {
     }
   }
 
-  void login(String email, password) async{
+  void login(String emailController, passwordController) async{
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
-
+      await auth.signInWithEmailAndPassword(email: emailController, password: passwordController);
     } catch(e) {
       Get.snackbar("About login", "Login message",
       backgroundColor: Colors.red,
@@ -79,5 +79,9 @@ class AuthController extends GetxController {
 
   void logout() async{
     await auth.signOut();
+  }
+
+  void forgetPassword(String email) async{
+    await auth.sendPasswordResetEmail(email: email);
   }
 }

@@ -24,18 +24,22 @@ class _MyHomePageState extends State<Home> {
               _header(),
               _wallet(),
               _mywallet(),
-              GestureDetector(onTap: () {
-                    AuthController.instance.logout();
-                  },
-                  child: const Text("Sign in",
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                          ),),
+              GestureDetector(
+                onTap: () {
+                  AuthController.instance.logout();
+                },
+                child: const Text(
+                  "Sign in",
+                  style: TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
               _menu(),
               _portfolio(),
               _watchlist(),
+              _logOut(),
             ],
           ),
         ),
@@ -43,7 +47,7 @@ class _MyHomePageState extends State<Home> {
     );
   }
 
-  void Function()? _menuIcon(){
+  void Function()? _menuIcon() {
     return null;
   }
 
@@ -76,10 +80,9 @@ class _MyHomePageState extends State<Home> {
           ),
           const Spacer(),
           MaterialButton(
-            onPressed: () {},
-            padding: const EdgeInsets.all(10),
-            child: const Icon(Iconsax.notification)
-          )
+              onPressed: () {},
+              padding: const EdgeInsets.all(10),
+              child: const Icon(Iconsax.notification))
         ],
       ),
     );
@@ -119,8 +122,6 @@ class _MyHomePageState extends State<Home> {
       ]),
     );
   }
-
-  
 
   Padding _menu() {
     return Padding(
@@ -193,7 +194,8 @@ class _MyHomePageState extends State<Home> {
       ),
     );
   }
-Container _mywallet() {
+
+  Container _mywallet() {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(
@@ -243,8 +245,8 @@ Container _mywallet() {
                         children: [
                           CircleAvatar(
                             radius: 24,
-                            backgroundImage: NetworkImage(
-                                '${walletList[index].iconUrl}'),
+                            backgroundImage:
+                                NetworkImage('${walletList[index].iconUrl}'),
                           ),
                           const SizedBox(width: 8),
                           Column(
@@ -485,6 +487,31 @@ Container _mywallet() {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Container _logOut() {
+    return Container(
+      width: 200,
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
+      height: 50,
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+        image: DecorationImage(
+            image: AssetImage('images/loginbtn.png'), fit: BoxFit.cover),
+      ),
+      child: Center(
+        child: GestureDetector(
+          onTap: () {
+            AuthController.instance.logout();
+          },
+          child: const Text(
+            "Sign out",
+            style: TextStyle(
+                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+          ),
+        ),
       ),
     );
   }
