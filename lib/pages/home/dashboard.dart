@@ -15,44 +15,25 @@ import '../../config/const.dart';
 // }
 
 class DashBoard extends StatefulWidget {
-  const DashBoard({super.key, String? email});
+  final int index;
+  const DashBoard({super.key, String? email, required this.index});
 
-  // This widget is the root of your application.
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     title: 'Flutter Demo',
-  //     debugShowCheckedModeBanner: false,
-  //     theme: ThemeData(
-  //       colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-  //       useMaterial3: true,
-  //     ),
-  //     home: const MyHomePage(title: 'Krowd Investment'),
-  //   );
-  // }
   @override
   State<StatefulWidget> createState() => _MyHomePageState();
 }
-
-// class MyHomePage extends StatefulWidget {
-//   const MyHomePage({super.key, required this.title});
-//   static const IconData bitcoin = IconData(0xf8b2,
-//       fontFamily: CupertinoIcons.iconFont,
-//       fontPackage: CupertinoIcons.iconFontPackage);
-
-//   static const IconData menu = IconData(0xe3dc, fontFamily: 'MaterialIcons');
-//   final String title;
-
-//   @override
-//   State<MyHomePage> createState() => _MyHomePageState();
-// }
 
 class _MyHomePageState extends State<DashBoard> {
   static const IconData bitcoin = IconData(0xf8b2,
       fontFamily: CupertinoIcons.iconFont,
       fontPackage: CupertinoIcons.iconFontPackage);
 
-  int index = 2;
+   late int index;
+
+  @override
+  void initState() {
+    super.initState();
+    index = widget.index;
+  }
   final items = const [
     Icon(
       Icons.home,
@@ -155,5 +136,9 @@ class _MyHomePageState extends State<DashBoard> {
         break;
     }
     return widget;
+  }
+
+  static Container _navBar() {
+    return Container();
   }
 }

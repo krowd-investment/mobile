@@ -32,5 +32,5 @@ List<WalletDTO> walletList = [
 List<WalletType> walletType = [
   WalletType(name: 'Ví đầu tư', description: 'Vi đầu tư', mode: 'Both'),
   WalletType(name: 'Ví thu tiền', description: 'Vi thu tiền', mode: 'Both'),
-  WalletType(name: 'Ví tạm thời', description: 'Vi tạm thời', mode: 'Both')
+  WalletType(name: 'Ví dich vụ', description: 'Vi dịch vụ', mode: 'Both')
 ];

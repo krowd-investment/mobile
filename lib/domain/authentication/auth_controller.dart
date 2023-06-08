@@ -25,8 +25,8 @@ class AuthController extends GetxController {
     if (user == null) {
       Get.offAll(() => const SignInPage());
     } else {
-      print(user.email);
-      Get.offAll(() => DashBoard(email:user.email));
+      debugPrint(user.email);
+      Get.offAll(() => DashBoard(email:user.email, index: 0,));
     }
   }
 

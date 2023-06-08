@@ -6,6 +6,8 @@ import 'package:krowd_invesment_footer/config/ultility.dart';
 import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
 import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
+import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -24,18 +26,6 @@ class _MyHomePageState extends State<Home> {
               _header(),
               _wallet(),
               _mywallet(),
-              GestureDetector(
-                onTap: () {
-                  AuthController.instance.logout();
-                },
-                child: const Text(
-                  "Sign in",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-              ),
               _menu(),
               _portfolio(),
               _watchlist(),
@@ -47,16 +37,16 @@ class _MyHomePageState extends State<Home> {
     );
   }
 
-  void Function()? _menuIcon() {
+  static void Function()? _menuIcon() {
     return null;
   }
 
-  Container _header() {
+ Container _header() {
     return Container(
       padding: const EdgeInsets.all(5),
       child: Row(
         children: [
-          IconButton(onPressed: _menuIcon, icon: const Icon(Icons.menu)),
+          const IconButton(onPressed: _menuIcon, icon: Icon(Icons.menu)),
           // const CircleAvatar(
           //   radius: 28,
           //   backgroundImage: NetworkImage(
@@ -67,7 +57,7 @@ class _MyHomePageState extends State<Home> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Hello, ',
+                'Xin chào, ',
                 style: GoogleFonts.poppins(
                     fontSize: 14, fontWeight: FontWeight.w400),
               ),
@@ -93,7 +83,7 @@ class _MyHomePageState extends State<Home> {
       padding: const EdgeInsets.all(10),
       child: Column(children: [
         Text(
-          'Availble Balance',
+          'General wallet',
           style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400),
         ),
         Text(
@@ -209,14 +199,19 @@ class _MyHomePageState extends State<Home> {
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               MaterialButton(
-                onPressed: () {},
                 child: Text(
-                  'View All',
+                  'View all',
                   style: GoogleFonts.poppins(
                       color: primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.w400),
                 ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DashBoard(index: 3,))
+                  );
+                },
               )
             ],
           ),
@@ -314,7 +309,7 @@ class _MyHomePageState extends State<Home> {
               MaterialButton(
                 onPressed: () {},
                 child: Text(
-                  'View All',
+                  "View all",
                   style: GoogleFonts.poppins(
                       color: primaryColor,
                       fontSize: 14,
@@ -410,14 +405,14 @@ class _MyHomePageState extends State<Home> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'My Watchlist',
+                'Project',
                 style: GoogleFonts.poppins(
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               MaterialButton(
                 onPressed: () {},
                 child: Text(
-                  'View All',
+                  'View all',
                   style: GoogleFonts.poppins(
                       color: primaryColor,
                       fontSize: 14,
