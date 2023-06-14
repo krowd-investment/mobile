@@ -19,6 +19,7 @@ class Wallet extends StatelessWidget {
             _header(),
             _mywallet(),
             _transaction(context),
+            _history(context)
           ],
         ),
       ),
@@ -132,7 +133,7 @@ Container _header() {
 
 Padding _transaction(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.only(left: 5, right: 5, top: 16, bottom: 8),
+    padding: const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
     child: Row(
       children: [
         Flexible(
@@ -204,8 +205,8 @@ Padding _transaction(BuildContext context) {
         Flexible(
           child: MaterialButton(
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => const AddScreen()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AddScreen()));
             },
             color: Colors.white,
             elevation: 0,
@@ -242,6 +243,36 @@ Padding _transaction(BuildContext context) {
   );
 }
 
-Container _history() {
-  return Container();
+Padding _history(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(left: 10, right: 5,bottom: 10),
+    child: Column(
+      children: [
+        Row(
+          children: [
+            Text(
+              'Transaction history',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            
+          ],
+        ),
+        Column(
+          children: [
+            Text(
+              'Transaction from',
+              style: GoogleFonts.poppins(
+                color: Colors.black,
+                fontSize: 12,
+              ),
+            ),
+          ],
+        )
+      ],
+    ),
+  );
 }
