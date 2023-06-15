@@ -13,7 +13,7 @@ void main() async {
   await Firebase.initializeApp().then((value) => Get.put(AuthController()));
   await Hive.initFlutter();
   Hive.registerAdapter(AdddataAdapter());
-  await Hive.openBox<Add_data>('data');
+  await Hive.openBox<AddData>('data');
   runApp(const MyApp());
 }
 

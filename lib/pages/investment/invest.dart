@@ -5,7 +5,7 @@ import 'package:krowd_invesment_footer/config/ultility.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
 
 class Invest extends StatefulWidget {
-  const Invest(String s, {super.key});
+  const Invest({super.key});
 
   @override
   _InvestState createState() => _InvestState();
@@ -62,11 +62,11 @@ class _InvestState extends State<Invest> {
       appBar: AppBar(
         title: const Text('Crowd Funding'),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         maintainBottomViewPadding: true,
         child: Column(
           children: [
-            _project(filteredProjects, selectedCategory),
+            // _project(filteredProjects, selectedCategory),
           ],
         ),
       ),
@@ -267,7 +267,7 @@ class CategoryButton extends StatelessWidget {
   final bool selected;
   final VoidCallback onPressed;
 
-  const CategoryButton({
+  const CategoryButton({super.key,
     required this.title,
     required this.selected,
     required this.onPressed,

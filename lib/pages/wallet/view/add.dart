@@ -11,7 +11,7 @@ class AddScreen extends StatefulWidget {
 }
 
 class AddScreenState extends State<AddScreen> {
-  final box = Hive.box<Add_data>('data');
+  final box = Hive.box<AddData>('data');
   DateTime date = DateTime.now();
   String? from;
   String? to;
@@ -107,7 +107,7 @@ class AddScreenState extends State<AddScreen> {
   GestureDetector save() {
     return GestureDetector(
       onTap: () {
-        var add = Add_data(transactionType!, amountController.text as double,
+        var add = AddData(transactionType!, amountController.text as double,
             date, expalin_C.text, from!, to!);
         box.add(add);
         Navigator.of(context).pop();

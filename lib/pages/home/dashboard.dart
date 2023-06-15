@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:krowd_invesment_footer/pages/history/history.dart';
 import 'package:krowd_invesment_footer/pages/home/home.dart';
 import 'package:krowd_invesment_footer/pages/investment/invest.dart';
-import 'package:krowd_invesment_footer/pages/notification/notifications.dart';
 import 'package:krowd_invesment_footer/pages/person/person.dart';
 import 'package:krowd_invesment_footer/pages/wallet/wallet.dart';
 
@@ -120,10 +120,10 @@ class _MyHomePageState extends State<DashBoard> {
         widget = const Home();
         break;
       case 1:
-        widget = const Notifications();
+        widget = const History();
         break;
       case 2:
-        widget = Invest('All');
+        widget = const Invest();
         break;
       case 3:
         widget = const Wallet();

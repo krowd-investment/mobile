@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:krowd_invesment_footer/pages/person/profile.dart';
 
