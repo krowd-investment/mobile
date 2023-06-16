@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:krowd_invesment_footer/pages/history/history.dart';
 import 'package:krowd_invesment_footer/pages/home/home.dart';
 import 'package:krowd_invesment_footer/pages/investment/invest.dart';
 import 'package:krowd_invesment_footer/pages/person/person.dart';
 import 'package:krowd_invesment_footer/pages/wallet/wallet.dart';
 
 import '../../config/const.dart';
+import '../notification/notifications.dart';
 
 // void main() {
 //   runApp(const DashBoard());
@@ -27,13 +27,14 @@ class _MyHomePageState extends State<DashBoard> {
       fontFamily: CupertinoIcons.iconFont,
       fontPackage: CupertinoIcons.iconFontPackage);
 
-   late int index;
+  late int index;
 
   @override
   void initState() {
     super.initState();
     index = widget.index;
   }
+
   final items = const [
     Icon(
       Icons.home,
@@ -120,7 +121,7 @@ class _MyHomePageState extends State<DashBoard> {
         widget = const Home();
         break;
       case 1:
-        widget = const History();
+        widget = const Notifications();
         break;
       case 2:
         widget = const Invest();
