@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:krowd_invesment_footer/pages/login/first_time.dart';
 import 'package:krowd_invesment_footer/pages/login/signin_page.dart';
+
+import '../../pages/home/dashboard.dart';
 
 class AuthController extends GetxController {
   //AuthControler.instance...
@@ -27,6 +30,7 @@ class AuthController extends GetxController {
     } else {
       debugPrint(user.email);
       Get.offAll(() => DashBoard(email:user.email, index: 0,));
+      //  Get.offAll(() => const FirstTime());
     }
   }
 
@@ -83,5 +87,39 @@ class AuthController extends GetxController {
 
   void forgetPassword(String email) async{
     await auth.sendPasswordResetEmail(email: email);
+  }
+
+
+
+handleAuthState(){
+    return StreamBuilder(
+      stream: auth.authStateChanges(),
+      builder: (BuildContext context, snapshot){
+          if(snapshot.hasData){
+            // return const Home();
+            return const FirstTime();
+          } else {
+            return const SignInPage();
+          }
+      });
+  }
+
+
+  signInWithGoogle() async{
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn(
+      scopes: <String>["email"]).signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken
+    );
+
+    // Once sign in return the Usercredential
+    return await auth.signInWithCredential(credential);
   }
 }

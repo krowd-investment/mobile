@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:krowd_invesment_footer/domain/repository/user_repo/user.dart';
+import 'package:krowd_invesment_footer/modules/user/models/user.dart';
 import 'package:krowd_invesment_footer/pages/person/about.dart';
 import 'package:krowd_invesment_footer/pages/person/qr.dart';
 import 'package:krowd_invesment_footer/widget/user_widget/appbar_widget.dart';
 
-import '../../domain/authentication/auth_controller.dart';
+import '../../modules/authentication/auth_controller.dart';
 import '../../widget/user_widget/extension_item_widget.dart';
 import '../../widget/user_widget/profile_widget.dart';
 import '../../widget/user_widget/threepart_widget.dart';

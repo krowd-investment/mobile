@@ -5,7 +5,6 @@ import 'package:krowd_invesment_footer/config/const.dart';
 import 'package:krowd_invesment_footer/config/ultility.dart';
 import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
-import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
 import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
 
 
@@ -499,7 +498,8 @@ class _MyHomePageState extends State<Home> {
       child: Center(
         child: GestureDetector(
           onTap: () {
-            AuthController.instance.logout();
+            // AuthController.instance.logout();
+
           },
           child: const Text(
             "Sign out",

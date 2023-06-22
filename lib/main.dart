@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:krowd_invesment_footer/data/add_date.dart';
-import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
+import 'package:krowd_invesment_footer/modules/authentication/auth_controller.dart';
 import 'package:krowd_invesment_footer/pages/login/signin_page.dart';
 
 

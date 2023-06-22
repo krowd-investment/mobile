@@ -1,5 +1,5 @@
 
-import 'package:krowd_invesment_footer/domain/repository/wallet_type_repo/models/wallet_type_dto.dart';
+import 'package:krowd_invesment_footer/modules/repository/wallet_type_repo/models/wallet_type_dto.dart';
 
 class WalletDTO {
   String? iconUrl;

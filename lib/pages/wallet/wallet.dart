@@ -135,9 +135,9 @@ Padding _transaction(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 5, right: 5, top: 10, bottom: 10),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Flexible(
-          child: MaterialButton(
+          MaterialButton(
             onPressed: () {},
             color: Colors.white,
             elevation: 0,
@@ -167,10 +167,8 @@ Padding _transaction(BuildContext context) {
               ],
             ),
           ),
-        ),
         const SizedBox(width: 3),
-        Flexible(
-          child: MaterialButton(
+          MaterialButton(
             onPressed: () {},
             color: Colors.white,
             elevation: 0,
@@ -200,10 +198,8 @@ Padding _transaction(BuildContext context) {
               ],
             ),
           ),
-        ),
         const SizedBox(width: 3),
-        Flexible(
-          child: MaterialButton(
+        MaterialButton(
             onPressed: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const AddScreen()));
@@ -236,7 +232,6 @@ Padding _transaction(BuildContext context) {
                 ),
               ],
             ),
-          ),
         ),
       ],
     ),

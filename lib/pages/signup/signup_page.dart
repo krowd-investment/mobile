@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
+import 'package:krowd_invesment_footer/modules/authentication/auth_controller.dart';
 import 'package:krowd_invesment_footer/pages/login/signin_page.dart';
 
 class SignUpPage extends StatelessWidget {

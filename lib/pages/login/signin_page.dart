@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:krowd_invesment_footer/domain/authentication/auth_controller.dart';
+import 'package:krowd_invesment_footer/modules/authentication/auth_controller.dart';
 import 'package:krowd_invesment_footer/pages/signup/signup_page.dart';
 
 const users = {
@@ -197,7 +197,7 @@ class SignInPage extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: w * 0.1,
+                height: w * 0.07,
               ),
               RichText(
                   text: TextSpan(
@@ -214,7 +214,17 @@ class SignInPage extends StatelessWidget {
                         ..onTap = () => Get.to(() => const SignUpPage()),
                     ),
                   ])),
+              SizedBox(
+                height: w * 0.03,
+              ),
+              GestureDetector(
+                  onTap:() {
+                    AuthController().signInWithGoogle();
+                  },
+                  child: const Image(width: 50, image: AssetImage('images/g.png'),),
+              ),
             ],
+            
           ),
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:krowd_invesment_footer/pages/person/profile.dart';
 
-import '../../domain/repository/user_repo/user.dart';
+import '../../modules/user/models/user.dart';
 
 class ProfileWidget extends StatefulWidget {
   final User user;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/repository/user_repo/user.dart';
+import '../../modules/user/models/user.dart';
 
 class UserProfileWidget extends StatefulWidget {
   const UserProfileWidget({super.key, required this.user});

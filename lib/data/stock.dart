@@ -1,4 +1,4 @@
-import '../domain/repository/wallet_repo/models/stock_dto.dart';
+import '../modules/repository/wallet_repo/models/stock_dto.dart';
 
 List<StockDTO> stockPortfolio = [
   StockDTO(
