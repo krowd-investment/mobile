@@ -13,7 +13,20 @@
           "package_name": "com.example.krowd_invesment_footer"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "526397080002-pmbt7kj2l6p65vf4c1eohgfoucjnf9am.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.krowd_invesment_footer",
+            "certificate_hash": "016db4d23c38686e98c85feee8ffd4a63a05f7ad"
+          }
+        },
+        {
+          "client_id": "526397080002-ahl5f56pbqrkl70khi0aju3bfl9h2top.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyD5ntqVfzEkD1bjkjGuVfq5bwLfFMaYz9c"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "526397080002-ahl5f56pbqrkl70khi0aju3bfl9h2top.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
