@@ -1,18 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:krowd_invesment_footer/pages/home/home.dart';
 import 'package:krowd_invesment_footer/pages/investment/invest.dart';
+import 'package:krowd_invesment_footer/pages/login/widgets/user_services.dart';
 import 'package:krowd_invesment_footer/pages/person/person.dart';
 import 'package:krowd_invesment_footer/pages/wallet/wallet.dart';
 
 import '../../config/const.dart';
 import '../notification/notifications.dart';
-
-// void main() {
-//   runApp(const DashBoard());
-// }
 
 class DashBoard extends StatefulWidget {
   final int index;
@@ -27,6 +27,7 @@ class _MyHomePageState extends State<DashBoard> {
       fontFamily: CupertinoIcons.iconFont,
       fontPackage: CupertinoIcons.iconFontPackage);
 
+  static Rx<Response> userInfo = Rx<Response>(const Response());
   late int index;
 
   @override
@@ -115,10 +116,11 @@ class _MyHomePageState extends State<DashBoard> {
   }
 
   Widget getSelectedWidget({required int index}) {
+    getUserInfo();
     Widget widget;
     switch (index) {
       case 0:
-        widget = const Home();
+        widget = Home(user : getUserModel());
         break;
       case 1:
         widget = const Notifications();
@@ -133,7 +135,7 @@ class _MyHomePageState extends State<DashBoard> {
         widget = const Person();
         break;
       default:
-        widget = const Home();
+        widget = Home(user : getUserModel());
         break;
     }
     return widget;
@@ -141,5 +143,43 @@ class _MyHomePageState extends State<DashBoard> {
 
   static Container _navBar() {
     return Container();
+  }
+
+  static Future<Response> getUserInfo() async {
+    final getResponse = await UserService.getUserInfo();
+    final getResponseBody = getResponse.body;
+    final getResponseStatus = getResponse.statusCode;
+    userInfo.value = Response(
+      body: jsonDecode(getResponseBody),
+      statusCode: getResponseStatus,
+    );
+    // log("User: ${jsonDecode(userInfo.value.body)}");
+    return userInfo.value;
+  }
+
+  Future<Map<String, dynamic>> getUserModel() async{
+    await getUserInfo();
+    final responseBody = userInfo.value.body;
+    // log('User info ${jsonDecode(responseBody)}');
+    final bodyJson = responseBody;
+    return {
+      "userId": bodyJson['userId'],
+      "roleId": bodyJson['roleId'],
+      "fullName": bodyJson['full_name'],
+      "email": bodyJson['email'],
+      "phone": bodyJson['phone'],
+      "avatar": bodyJson['avatar'],
+      "idCard": bodyJson['id_card'],
+      "gender": bodyJson['gender'],
+      "birthdate": bodyJson['birthdate'],
+      "taxIdentification": bodyJson['taxIdentification'],
+      "address": bodyJson['address'],
+      "bankName": bodyJson['bankName'],
+      "bankAccount": bodyJson['bank_account'],
+      "momo": bodyJson['momo'],
+      "createdAt": bodyJson['createdAt'],
+      "status": bodyJson['status'],
+      "enabled": bodyJson['enabled']
+    };
   }
 }

@@ -8,6 +8,7 @@ import 'package:krowd_invesment_footer/pages/login/widgets/user_services.dart';
 class FirstTime extends StatefulWidget {
   final Map? userModel;
   const FirstTime({super.key, this.userModel});
+  
   @override
   State<FirstTime> createState() => _FirstTimeState();
 }
@@ -17,7 +18,7 @@ class _FirstTimeState extends State<FirstTime> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController addressController = TextEditingController();
   TextEditingController birthdateController = TextEditingController();
-
+  FirstTime instance = const FirstTime();
   @override
   void initState() {
     super.initState();
@@ -255,4 +256,6 @@ class _FirstTimeState extends State<FirstTime> {
       "momo": phone
     };
   }
+
+
 }

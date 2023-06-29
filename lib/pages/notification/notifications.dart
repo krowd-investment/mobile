@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 
 import '../../widget/notification_widget/head_wallet_widet.dart';
 import '../../widget/notification_widget/items_wallet_widget.dart';
@@ -160,12 +160,7 @@ class _NotificationsState extends State<Notifications> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 239, 26, 157),
-        elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(left: 130),
-          child: Text("My Notifications"),
-        ),
+        title: const Text('Notifications'),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

@@ -7,14 +7,19 @@ import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
 import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
 
-
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final Future<Map<String, dynamic>> user;
+  const Home({required this.user, Key? key}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +29,9 @@ class _MyHomePageState extends State<Home> {
             children: [
               _header(),
               _wallet(),
-              _mywallet(),
               _menu(),
-              _portfolio(),
+              _mywallet(),
               _watchlist(),
-              _logOut(),
             ],
           ),
         ),
@@ -40,39 +43,48 @@ class _MyHomePageState extends State<Home> {
     return null;
   }
 
- Container _header() {
+  Container _header() {
     return Container(
       padding: const EdgeInsets.all(5),
-      child: Row(
-        children: [
-          const IconButton(onPressed: _menuIcon, icon: Icon(Icons.menu)),
-          // const CircleAvatar(
-          //   radius: 28,
-          //   backgroundImage: NetworkImage(
-          //       'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
-          // ),
-          const SizedBox(width: 5),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Xin chào, ',
-                style: GoogleFonts.poppins(
-                    fontSize: 14, fontWeight: FontWeight.w400),
-              ),
-              Text(
-                'Danialtien',
-                style: GoogleFonts.poppins(
-                    fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-          const Spacer(),
-          MaterialButton(
-              onPressed: () {},
-              padding: const EdgeInsets.all(10),
-              child: const Icon(Iconsax.notification))
-        ],
+      child: FutureBuilder<Map<String, dynamic>>(
+        future: widget.user,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            // Show a loading indicator while waiting for the user future
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            // Handle any error that occurred while fetching the user
+            return Text('Error: ${snapshot.error}');
+          } else {
+            // Access the fullName property from the user map
+            var fullName = snapshot.data?["fullName"];
+            return Row(
+              children: [
+                // Other widgets
+                const SizedBox(width: 5),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Xin chào, ',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14, fontWeight: FontWeight.w400),
+                      ),
+                      Text(
+                        '$fullName',
+                        style: GoogleFonts.poppins(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                ),
+                // Other widgets
+              ],
+            );
+          }
+        },
       ),
     );
   }
@@ -85,25 +97,20 @@ class _MyHomePageState extends State<Home> {
           'General wallet',
           style: GoogleFonts.poppins(fontSize: 14, fontWeight: FontWeight.w400),
         ),
-        Text(
-          '\$112,550.00',
-          style: GoogleFonts.poppins(fontSize: 34, fontWeight: FontWeight.w700),
-        ),
-        const SizedBox(height: 10),
         RichText(
           text: TextSpan(children: [
             TextSpan(
-              text: '\$110,000.52',
+              text: '10.000.000,0',
               style: GoogleFonts.poppins(
                   color: Colors.black87,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400),
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700),
             ),
             TextSpan(
-              text: '+15',
+              text: ' VND',
               style: GoogleFonts.poppins(
                   color: Colors.green,
-                  fontSize: 14,
+                  fontSize: 20,
                   fontWeight: FontWeight.w400),
             ),
           ]),
@@ -164,7 +171,7 @@ class _MyHomePageState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Iconsax.arrow_down_2,
+                    Iconsax.arrow_up_1,
                     color: primaryColor,
                   ),
                   const SizedBox(width: 8),
@@ -207,9 +214,11 @@ class _MyHomePageState extends State<Home> {
                 ),
                 onPressed: () {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const DashBoard(index: 3,))
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashBoard(
+                                index: 3,
+                              )));
                 },
               )
             ],
@@ -499,7 +508,6 @@ class _MyHomePageState extends State<Home> {
         child: GestureDetector(
           onTap: () {
             // AuthController.instance.logout();
-
           },
           child: const Text(
             "Sign out",

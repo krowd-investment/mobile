@@ -18,6 +18,7 @@ class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   Rx<Response> authenticateBody = Rx<Response>(const Response());
 
+
   static dynamic token;
 
   @override
@@ -75,8 +76,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> authenticateBackEnd(var firebaseIdToken) async {
-    final response = await UserService.authenticateBackEnd(firebaseIdToken);
-    final getResponse = response; // Await the inner Future<Response>
+    final getResponse = await UserService.authenticateBackEnd(firebaseIdToken);
     final getResponseBody = getResponse.body;
     final getResponseStatus = getResponse.statusCode;
 
@@ -84,9 +84,6 @@ class AuthController extends GetxController {
       body: getResponseBody,
       statusCode: getResponseStatus,
     );
-    debugPrint("Authenticate body : ${authenticateBody.value.body}");
-    debugPrint(
-        "Authenticate status code : ${authenticateBody.value.statusCode}");
   }
 
   void register(String email, password) async {

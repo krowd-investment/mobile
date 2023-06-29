@@ -12,12 +12,16 @@ class Wallet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('My wallet'),
+      ),
       body: SafeArea(
         maintainBottomViewPadding: true,
         child: Column(
           children: [
-            _header(),
+            const SizedBox(height: 5,),
             _mywallet(),
+            const SizedBox(height: 5,),
             _transaction(context),
             _history(context)
           ],
@@ -105,27 +109,6 @@ Padding _mywallet() {
             ),
           ),
         )
-      ],
-    ),
-  );
-}
-
-Container _header() {
-  return Container(
-    padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
-    child: Row(
-      children: [
-        const SizedBox(width: 5),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'My wallet',
-              style: GoogleFonts.poppins(
-                  fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-          ],
-        ),
       ],
     ),
   );
@@ -256,10 +239,11 @@ Padding _history(BuildContext context) {
             
           ],
         ),
-        Column(
+        const SizedBox(height: 20,),
+        Row(
           children: [
             Text(
-              'Transaction from',
+              'Bạn đã chuyển tiền từ ví dịch vụ sang ví thu tiền thành công',
               style: GoogleFonts.poppins(
                 color: Colors.black,
                 fontSize: 12,

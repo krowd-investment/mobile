@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:krowd_invesment_footer/modules/authentication/auth_controller.dart';
@@ -27,4 +28,15 @@ class UserService {
     final uri = Uri.parse(url);
     return await http.get(uri, headers: headers);
   }
+
+  static Future<http.Response> getUserInfo() async {
+    const url =
+        'https://funfund.onrender.com/api/user';
+    final headers = {'Authorization': 'Bearer ${AuthController.token}'};
+    final uri = Uri.parse(url);
+    final response  = await http.get(uri, headers: headers);
+    log(response.body);
+    return response;
+  }
+  
 }

@@ -6,27 +6,27 @@ List<WalletDTO> walletList = [
   WalletDTO(
       symbol: walletType.elementAt(0),
       name: 'Investment',
-      price: '\$80.55',
+      price: '10.000.000,0 VND',
       change: '2.50(+1.60%)',
       color: '#4c956c',
       iconUrl:
-          'https://upload.wikimedia.org/wikipedia/en/thumb/d/d3/Starbucks_Corporation_Logo_2011.svg/800px-Starbucks_Corporation_Logo_2011.svg.png'),
+          'https://th.bing.com/th/id/R.dca8d5d231ea0afea16784f3d275f566?rik=%2bqMSVIDyJFA88w&riu=http%3a%2f%2ficon-icons.com%2ficons2%2f474%2fPNG%2f512%2fwallet_46876.png&ehk=Xsh4KxbjPUW51rMjXe9Gr0uG5qsONv8e2HtBVJPYcD8%3d&risl=&pid=ImgRaw&r=0'),
   WalletDTO(
       symbol: walletType.elementAt(1),
       name: 'Collection',
-      price: '\$110.14',
-      change: '4.50(+6.60%)',
+      price: '500.000,0 VND',
+      change: '2.50(+1.60%)',
       color: '#3a86ff',
       iconUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png'),
+          'https://cdn1.iconfinder.com/data/icons/flat-business-finance/256/wallet_money_finance_business-512.png'),
   WalletDTO(
       symbol: walletType.elementAt(2),
       name: 'Microsoft',
-      price: '\$175.66',
+      price: '1.000.000,0 VND',
       change: '2.20(+3.60%)',
       color: '#00a6fb',
       iconUrl:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/800px-Microsoft_logo.svg.png'),
+          'https://cdn2.iconfinder.com/data/icons/green-business-icons-1/1500/money_notes_card_wallet_billfold_holder_business_finance-512.png'),
 ];
 
 List<WalletType> walletType = [
