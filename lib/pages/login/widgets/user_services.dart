@@ -10,11 +10,13 @@ class UserService {
   static Future<bool> registerUser(Map body) async {
     const url = 'https://funfund.onrender.com/api/user';
     final uri = Uri.parse(url);
+    final headers = {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthController.token}'};
     final response = await http.put(
       uri,
-      headers: generalHeaders,
+      headers: headers,
       body: jsonEncode(body),
     );
+    log("Register user: ${response.body}");
     return response.statusCode == 200;
   }
 
@@ -23,7 +25,6 @@ class UserService {
     const url =
         'https://funfund.onrender.com/api/authenticate';
     final headers = {'Authorization': 'Bearer ${AuthController.token}'};
-
     generalHeaders = headers;
     final uri = Uri.parse(url);
     return await http.get(uri, headers: headers);

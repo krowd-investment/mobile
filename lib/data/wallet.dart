@@ -21,7 +21,7 @@ List<WalletDTO> walletList = [
           'https://cdn1.iconfinder.com/data/icons/flat-business-finance/256/wallet_money_finance_business-512.png'),
   WalletDTO(
       symbol: walletType.elementAt(2),
-      name: 'Microsoft',
+      name: 'Service',
       price: '1.000.000,0 VND',
       change: '2.20(+3.60%)',
       color: '#00a6fb',
