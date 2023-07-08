@@ -38,6 +38,13 @@
             {
               "client_id": "526397080002-ahl5f56pbqrkl70khi0aju3bfl9h2top.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "526397080002-tc2gibeqtd4oahc10sajv861ic3lk3o2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.krowdInvesmentFooter"
+              }
             }
           ]
         }

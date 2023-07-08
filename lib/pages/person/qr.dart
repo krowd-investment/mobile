@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class QrWidget extends StatefulWidget {
-  const QrWidget({super.key, required this.fullNanme, required this.phone});
-  final String fullNanme;
+  const QrWidget({super.key, required this.fullName, required this.phone});
+  final String fullName;
   final String phone;
   @override
   State<StatefulWidget> createState() => _QrState();
@@ -36,7 +36,7 @@ class _QrState extends State<QrWidget> {
                 Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
-                    widget.fullNanme,
+                    widget.fullName,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 16.0,
@@ -73,7 +73,7 @@ class _QrState extends State<QrWidget> {
                     height: 160,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage('images/f.png'),
+                        image: AssetImage('images/constant_QR.png'),
                         fit: BoxFit.cover,
                       ),
                     ),

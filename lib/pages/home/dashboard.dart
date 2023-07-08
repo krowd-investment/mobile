@@ -120,7 +120,7 @@ class _MyHomePageState extends State<DashBoard> {
     Widget widget;
     switch (index) {
       case 0:
-        widget = Home(user : getUserModel());
+        widget = Home(user: getUserModel());
         break;
       case 1:
         widget = const Notifications();
@@ -132,10 +132,10 @@ class _MyHomePageState extends State<DashBoard> {
         widget = const Wallet();
         break;
       case 4:
-        widget = const Person();
+        widget = Person(user: getUserModel());
         break;
       default:
-        widget = Home(user : getUserModel());
+        widget = Home(user: getUserModel());
         break;
     }
     return widget;
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<DashBoard> {
     return userInfo.value;
   }
 
-  Future<Map<String, dynamic>> getUserModel() async{
+  Future<Map<String, dynamic>> getUserModel() async {
     await getUserInfo();
     final responseBody = userInfo.value.body;
     // log('User info ${jsonDecode(responseBody)}');

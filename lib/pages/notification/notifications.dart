@@ -1,8 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-
-import '../../widget/notification_widget/head_wallet_widet.dart';
-import '../../widget/notification_widget/items_wallet_widget.dart';
+import 'package:krowd_invesment_footer/pages/notification/widgets/head_wallet_widet.dart';
+import 'package:krowd_invesment_footer/pages/notification/widgets/items_wallet_widget.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);

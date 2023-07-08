@@ -49,7 +49,7 @@ dependencies:
   hive_flutter: ^1.1.0
   http: ^1.0.0
   json_annotation:
-  google_sign_in:
+  google_sign_in: ^6.1.4
   carousel_slider: ^4.2.1
   dio: ^5.2.1+1
   
@@ -64,6 +64,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  path_provider: ^2.0.5
+  image_picker: ^0.8.4+4
   build_runner:
   json_serializable:
 
@@ -88,6 +90,17 @@ flutter:
     - images/f.png
     - images/g.png
     - images/t.png
+    - images/defaultavatar.png
+    - images/referent.jpg
+    - images/constant_QR.png
+    - images/momo.png
+    - images/bank.png
+    - images/change_image.png
+    - images/setting.png
+    - images/expense.png
+    - images/voucher.png
+    - images/app_score.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

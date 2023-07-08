@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:krowd_invesment_footer/modules/user/models/user.dart';
 import 'package:krowd_invesment_footer/pages/person/about.dart';
 import 'package:krowd_invesment_footer/pages/person/qr.dart';
-import 'package:krowd_invesment_footer/widget/user_widget/appbar_widget.dart';
+import 'package:krowd_invesment_footer/pages/person/services/person_services.dart';
+import 'package:krowd_invesment_footer/pages/person/widgets/appbar_widget.dart';
+import 'package:krowd_invesment_footer/pages/person/widgets/extension_item_widget.dart';
+import 'package:krowd_invesment_footer/pages/person/widgets/profile_widget.dart';
+import 'package:krowd_invesment_footer/pages/person/widgets/threepart_widget.dart';
 
+import '../../controller/person_controller/person_control.dart';
 import '../../modules/authentication/auth_controller.dart';
-import '../../widget/user_widget/extension_item_widget.dart';
-import '../../widget/user_widget/profile_widget.dart';
-import '../../widget/user_widget/threepart_widget.dart';
 
 class Person extends StatefulWidget {
-  const Person({Key? key}) : super(key: key);
+  const Person({Key? key, required this.user}) : super(key: key);
+
+  final Future<Map<String, dynamic>> user;
 
   @override
   State<StatefulWidget> createState() {
@@ -20,6 +23,16 @@ class Person extends StatefulWidget {
 
 class PersonSate extends State<Person> {
   bool isVisible = false, light = true;
+  Map<String, dynamic>? userDataUpdate;
+
+  Future<void> setUpdate() async {
+    final user = await PersonServices.fetchUser();
+    setState(() {
+      if (user != null) {
+        userDataUpdate = user;
+      }
+    });
+  }
 
   void setVisibility() {
     setState(() {
@@ -35,139 +48,154 @@ class PersonSate extends State<Person> {
 
   @override
   Widget build(BuildContext context) {
-    final user = User(
-        fullname: "Ricardo milos",
-        email: "ricardomilos@demo.com",
-        phone: "0123456789",
-        avatar: 'images/loginimg.png',
-        gender: "Male",
-        birthDay: DateTime(1995, 07, 15),
-        address:
-            "South america, D1 hall street, old town greenwich, 671 switch gate",
-        bankName: "Ricardo",
-        bankAccount: "0958 7561 822963",
-        momo: "Ricardo",
-        isEnabled: true);
-
-    return Scaffold(
-      appBar: buildAppBar(context, setTheme),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: light ? Colors.white : Colors.grey.shade900,
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(5, 12, 5, 5),
+    return FutureBuilder<Map<String, dynamic>>(
+        future: widget.user,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            final userData = snapshot.data;
+            return Scaffold(
+              appBar: buildAppBar(context, setTheme),
+              body: SingleChildScrollView(
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: light ? Colors.white : Colors.grey.shade900,
                   child: Column(
                     children: [
+                      Align(
+                        alignment: Alignment.topCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 12, 5, 5),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: const EdgeInsets.all(5.0),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 5.0,
+                                  vertical: 5.0,
+                                ),
+                                width: 500.0,
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  color: Colors.pink,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                child: Column(
+                                  children: [
+                                    userDataUpdate == null
+                                        ? UserOverview(
+                                            userData: userData,
+                                            setUpdate: setUpdate)
+                                        : UserOverview(
+                                            userData: userDataUpdate,
+                                            setUpdate: setUpdate),
+                                    const AboutApp(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       Container(
-                        margin: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.fromLTRB(10, 5, 100, 5),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Manage ',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: light ? Colors.black : Colors.white,
+                          ),
+                        ),
+                      ),
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeInOut,
+                        margin: const EdgeInsets.all(8),
                         padding: const EdgeInsets.symmetric(
                           horizontal: 5.0,
                           vertical: 5.0,
                         ),
                         width: 500.0,
-                        height: 150.0,
+                        height: isVisible ? 220.0 : 150.0,
                         decoration: BoxDecoration(
                           color: Colors.pink,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: Column(
                           children: [
-                            UserOverview(
-                              user: user,
-                            ),
-                            const AboutApp(),
+                            userDataUpdate == null
+                                ? HeadManage(
+                                    setVisibility: setVisibility,
+                                    isVisible: isVisible,
+                                    userData: userData,
+                                    setUpdate: setUpdate,
+                                  )
+                                : HeadManage(
+                                    setVisibility: setVisibility,
+                                    isVisible: isVisible,
+                                    userData: userDataUpdate,
+                                    setUpdate: setUpdate,
+                                  ),
                           ],
                         ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.fromLTRB(10, 5, 100, 5),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Extension ',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold,
+                            color: light ? Colors.black : Colors.white,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.fromLTRB(10, 1, 10, 10),
+                        height: 100,
+                        decoration: BoxDecoration(
+                          color: Colors.pink,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: const HeadExtension(),
+                      ),
+                      Container(
+                        height: 45,
+                        width: 375,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const LogOut(),
                       ),
                     ],
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 5, 100, 5),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Manage ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: light ? Colors.black : Colors.white,
-                  ),
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-                margin: const EdgeInsets.all(8),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 5.0,
-                  vertical: 5.0,
-                ),
-                width: 500.0,
-                height: isVisible ? 160.0 : 100.0,
-                decoration: BoxDecoration(
-                  color: Colors.pink,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Column(
-                  children: [
-                    HeadManage(
-                      setVisibility: setVisibility,
-                      isVisible: isVisible,
-                      user: user,
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 5, 100, 5),
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Extension ',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: light ? Colors.black : Colors.white,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(10, 1, 10, 10),
-                height: 100,
-                decoration: BoxDecoration(
-                  color: Colors.pink,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: const HeadExtension(),
-              ),
-              Container(
-                height: 45,
-                width: 375,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const LogOut(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 }
 
 class UserOverview extends StatefulWidget {
-  const UserOverview({super.key, required this.user});
-  final User user;
+  const UserOverview(
+      {super.key, required this.userData, required this.setUpdate});
+  final Map<String, dynamic>? userData;
+  final VoidCallback setUpdate;
   @override
   State<StatefulWidget> createState() => _UserOverviewState();
 }
@@ -195,7 +223,8 @@ class _UserOverviewState extends State<UserOverview> {
                           physics: const BouncingScrollPhysics(),
                           children: [
                             ProfileWidget(
-                              user: widget.user,
+                              userData: widget.userData,
+                              setUpdate: widget.setUpdate,
                             ),
                           ],
                         ),
@@ -206,7 +235,7 @@ class _UserOverviewState extends State<UserOverview> {
                     flex: 1,
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: buildName(widget.user),
+                      child: buildName(widget.userData),
                     ),
                   ),
                 ],
@@ -215,25 +244,29 @@ class _UserOverviewState extends State<UserOverview> {
           ),
           Expanded(
             flex: 1,
-            child: buildQR(widget.user),
+            child: buildQR(widget.userData),
           ),
         ],
       ),
     );
   }
 
-  Widget buildName(User user) => Padding(
+  Widget buildName(Map<String, dynamic>? userData) => Padding(
         padding: const EdgeInsets.fromLTRB(4, 16, 0, 0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              user.fullname,
+              userData!['full_name'] == null
+                  ? userData['fullName'].toString()
+                  : userData['full_name'].toString(),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
             ),
             const SizedBox(height: 5),
             Text(
-              user.phone,
+              userData['phone'] != null
+                  ? userData['phone'].toString()
+                  : "You not have phone yet",
               style: const TextStyle(color: Colors.white, fontSize: 9),
             ),
             const SizedBox(height: 5),
@@ -249,7 +282,7 @@ class _UserOverviewState extends State<UserOverview> {
                   padding: const EdgeInsets.fromLTRB(3, 3, 3, 3),
                   child: Text(
                     textAlign: TextAlign.center,
-                    user.isEnabled ? 'Activate' : 'InAtivate',
+                    userData['enabled'] ? 'Activate' : 'InAtivate',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 7,
@@ -263,7 +296,7 @@ class _UserOverviewState extends State<UserOverview> {
         ),
       );
 
-  Widget buildQR(User user) => Padding(
+  Widget buildQR(Map<String, dynamic>? userData) => Padding(
         padding: const EdgeInsets.only(bottom: 17),
         child: TextButton(
           onPressed: () {
@@ -271,14 +304,18 @@ class _UserOverviewState extends State<UserOverview> {
               context,
               MaterialPageRoute(
                 builder: (context) => QrWidget(
-                  fullNanme: user.fullname,
-                  phone: user.phone,
+                  fullName: userData!['fullName'] != null
+                      ? userData['fullName'].toString()
+                      : "Full name is null",
+                  phone: userData['phone'] != null
+                      ? userData['phone'].toString()
+                      : "You not have phone yet",
                 ),
               ),
             );
           },
           child: Image.asset(
-            "images/f.png",
+            "images/constant_QR.png",
             width: 70,
             height: 40,
           ),
@@ -336,11 +373,10 @@ class _AboutAppState extends State<AboutApp> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           image: const DecorationImage(
-            image: AssetImage('images/f.png'),
+            image: AssetImage('images/referent.jpg'),
             fit: BoxFit.cover,
           ),
         ),
-        // Other properties for the Container
         width: 30,
         height: 30,
       );
@@ -380,11 +416,12 @@ class HeadManage extends StatefulWidget {
       {Key? key,
       required this.setVisibility,
       required this.isVisible,
-      required this.user})
+      required this.userData,
+      required this.setUpdate})
       : super(key: key);
-  final VoidCallback setVisibility;
+  final VoidCallback setVisibility, setUpdate;
   final bool isVisible;
-  final User user;
+  final Map<String, dynamic>? userData;
   @override
   State<StatefulWidget> createState() => _HeadManageSate();
 }
@@ -406,41 +443,64 @@ class _HeadManageSate extends State<HeadManage> {
             borderRadius: BorderRadius.circular(8),
           ),
           duration: const Duration(milliseconds: 500),
-          height: widget.isVisible ? 70 : 0,
+          height: widget.isVisible ? 75 : 0,
           width: 500,
           child: Visibility(
             visible: widget.isVisible,
             child: Column(
               children: [
                 buildElementHidden(
-                    'images/f.png', "MoMo Wallet", "4.548.300", 12, 170),
-                buildElementHidden('images/f.png', widget.user.bankName,
-                    widget.user.bankAccount, 9, 187),
-                buildCatchEventText("View All"),
+                    'images/momo.png',
+                    widget.userData!['momo'] != null
+                        ? widget.userData!['momo'].toString()
+                        : "You not have momo",
+                    "4.548.300\$",
+                    12,
+                    170),
+                buildElementHidden(
+                    'images/bank.png',
+                    widget.userData!['bankName'] != null
+                        ? widget.userData!['bankName'].toString()
+                        : "You not have bank",
+                    widget.userData!['bank_account'] != null
+                        ? widget.userData!['bank_account'].toString()
+                        : widget.userData!['bankAccount'].toString(),
+                    12,
+                    187),
+                buildCatchEventText("Link Now"),
               ],
             ),
           ),
         ),
         const SizedBox(height: 5),
         buildThreePartItem(
-            'images/f.png',
-            "Change Password",
-            const Icon(
-              Icons.keyboard_arrow_right_sharp,
-              size: 20,
-              color: Colors.black,
-            ),
-            150),
+          'images/change_image.png',
+          "Change Image",
+          const Icon(
+            Icons.keyboard_arrow_right_sharp,
+            size: 20,
+            color: Colors.black,
+          ),
+          173,
+          "Image",
+          context,
+          widget.userData,
+          widget.setUpdate,
+        ),
         const SizedBox(height: 3),
         buildThreePartItem(
-            'images/f.png',
+            'images/setting.png',
             "Setting",
             const Icon(
               Icons.keyboard_arrow_right_sharp,
               size: 20,
               color: Colors.black,
             ),
-            218),
+            218,
+            "Password",
+            context,
+            widget.userData,
+            widget.setUpdate),
       ],
     );
   }
@@ -474,45 +534,51 @@ class _HeadManageSate extends State<HeadManage> {
       );
 
   Widget buildElementHidden(String imagePath, String textOne, String textTwo,
-          double fontSize, double paddingLeft) =>
-      Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.fromLTRB(5, 7, 0, 0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              image: DecorationImage(
-                image: AssetImage(imagePath),
-                fit: BoxFit.cover,
-              ),
-            ),
-            width: 15,
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(25, 6, 0, 0),
-            child: Text(
-              textOne,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+      double fontSize, double paddingLeft) {
+    if (textOne == "string") {
+      textOne = "Not linked yet";
+      textTwo = "";
+    }
+
+    return Row(
+      children: [
+        Container(
+          margin: const EdgeInsets.fromLTRB(5, 7, 0, 0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5),
+            image: DecorationImage(
+              image: AssetImage(imagePath),
+              fit: BoxFit.cover,
             ),
           ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(paddingLeft, 6, 0, 0),
-            child: Text(
-              textTwo,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: fontSize, color: Colors.white),
-            ),
+          width: 15,
+          height: 15,
+        ),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(25, 6, 0, 0),
+          child: Text(
+            textOne,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
           ),
-        ],
-      );
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(paddingLeft, 6, 0, 0),
+          child: Text(
+            textTwo,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: fontSize, color: Colors.white),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget buildCatchEventText(String text) => GestureDetector(
         onTap: () {},
         child: Container(
           height: 15,
-          width: 40,
+          width: 50,
           margin: const EdgeInsets.fromLTRB(27, 10, 0, 0),
           child: Text(
             text,
@@ -539,7 +605,7 @@ class _HeadExtensionState extends State<HeadExtension> {
     return Column(
       children: [
         buildItemExtension(
-          'images/f.png',
+          'images/expense.png',
           "Expense Overview",
           "Record and track your expanse every day",
           0,
@@ -554,7 +620,7 @@ class _HeadExtensionState extends State<HeadExtension> {
           ),
         ),
         buildItemExtension(
-          'images/f.png',
+          'images/voucher.png',
           "Voucher Collected",
           "3 gift vouchers",
           10,
@@ -569,7 +635,7 @@ class _HeadExtensionState extends State<HeadExtension> {
           ),
         ),
         buildItemExtension(
-          'images/f.png',
+          'images/app_score.png',
           "App Score",
           "Show up score activity",
           10,

@@ -1,14 +1,17 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:krowd_invesment_footer/pages/person/profile.dart';
 
-import '../../modules/user/models/user.dart';
-
 class ProfileWidget extends StatefulWidget {
-  final User user;
   const ProfileWidget({
     Key? key,
-    required this.user,
+    required this.userData,
+    required this.setUpdate,
   }) : super(key: key);
+
+  final Map<String, dynamic>? userData;
+  final VoidCallback setUpdate;
   @override
   State<StatefulWidget> createState() => _ProfileState();
 }
@@ -21,7 +24,7 @@ class _ProfileState extends State<ProfileWidget> {
     return Center(
       child: Stack(
         children: [
-          buildImage(),
+          buildImage(widget.userData),
           Positioned(
             bottom: 0,
             right: 4,
@@ -32,27 +35,39 @@ class _ProfileState extends State<ProfileWidget> {
     );
   }
 
-  Widget buildImage() {
-    final image = AssetImage(widget.user.avatar);
+  Widget buildImage(Map<String, dynamic>? userData) {
+    final dynamic imageDefault;
+    String url = userData!['avatar'] != null
+        ? userData['avatar'].toString()
+        : "/data/user/0/com.example.krowd_invesment_footer/app_flutter/images/image_1688456125915.png";
+
+    if (url == "string") {
+      imageDefault = const AssetImage("images/defaultavatar.png");
+    } else {
+      imageDefault = FileImage(File(url));
+    }
 
     return ClipOval(
       child: Material(
-        color: Colors.transparent,
+        color: const Color.fromARGB(0, 255, 255, 255),
         child: Ink.image(
-          image: image,
+          image: imageDefault,
           fit: BoxFit.cover,
           width: 70,
           height: 70,
-          child: InkWell(onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UserProfileWidget(
-                  user: widget.user,
+          child: InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfileWidget(
+                    userData: widget.userData,
+                    setUpdate: widget.setUpdate,
+                  ),
                 ),
-              ),
-            );
-          }),
+              );
+            },
+          ),
         ),
       ),
     );
@@ -70,7 +85,8 @@ class _ProfileState extends State<ProfileWidget> {
                 context,
                 MaterialPageRoute(
                   builder: (context) => UserProfileWidget(
-                    user: widget.user,
+                    userData: widget.userData,
+                    setUpdate: widget.setUpdate,
                   ),
                 ),
               );
