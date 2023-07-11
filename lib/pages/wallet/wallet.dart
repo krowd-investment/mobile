@@ -3,35 +3,54 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:krowd_invesment_footer/config/const.dart';
 import 'package:krowd_invesment_footer/config/ultility.dart';
-import 'package:krowd_invesment_footer/data/wallet.dart';
 import 'package:krowd_invesment_footer/pages/wallet/view/add.dart';
+
+import '../../data/wallet.dart';
+import '../../modules/repository/wallet_repo/models/wallet_dto.dart';
 
 class Wallet extends StatelessWidget {
   const Wallet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My wallet'),
-      ),
-      body: SafeArea(
-        maintainBottomViewPadding: true,
-        child: Column(
-          children: [
-            const SizedBox(height: 5,),
-            _mywallet(),
-            const SizedBox(height: 5,),
-            _transaction(context),
-            _history(context)
-          ],
-        ),
-      ),
-    );
+    return FutureBuilder<List<WalletDTO>>(
+        future: fetchWalletAndPopulateList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasData) {
+            final walletList = snapshot.data;
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text('My wallet'),
+              ),
+              body: SafeArea(
+                maintainBottomViewPadding: true,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    _mywallet(walletList),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    _transaction(context),
+                    _history(context)
+                  ],
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 }
 
-Padding _mywallet() {
+Padding _mywallet(List<WalletDTO>? walletList) {
   return Padding(
     padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
     child: Column(
@@ -40,7 +59,7 @@ Padding _mywallet() {
           height: 142,
           child: ListView.builder(
             shrinkWrap: true,
-            itemCount: walletList.length,
+            itemCount: walletList!.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => InkWell(
               onTap: () {},
@@ -120,101 +139,101 @@ Padding _transaction(BuildContext context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-          MaterialButton(
-            onPressed: () {},
-            color: Colors.white,
-            elevation: 0,
-            focusElevation: 0,
-            highlightElevation: 0,
-            height: 50,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(color: primaryColor),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Iconsax.arrow_down_2,
-                  color: primaryColor,
-                ),
-                const SizedBox(width: 3),
-                Text(
-                  'Withdraw',
-                  style: GoogleFonts.poppins(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+        MaterialButton(
+          onPressed: () {},
+          color: Colors.white,
+          elevation: 0,
+          focusElevation: 0,
+          highlightElevation: 0,
+          height: 50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: primaryColor),
           ),
-        const SizedBox(width: 3),
-          MaterialButton(
-            onPressed: () {},
-            color: Colors.white,
-            elevation: 0,
-            focusElevation: 0,
-            highlightElevation: 0,
-            height: 50,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(color: primaryColor),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Iconsax.arrow_up_1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Iconsax.arrow_down_2,
+                color: primaryColor,
+              ),
+              const SizedBox(width: 3),
+              Text(
+                'Withdraw',
+                style: GoogleFonts.poppins(
                   color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(width: 3),
-                Text(
-                  'Deposit',
-                  style: GoogleFonts.poppins(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
+        ),
         const SizedBox(width: 3),
         MaterialButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const AddScreen()));
-            },
-            color: Colors.white,
-            elevation: 0,
-            focusElevation: 0,
-            highlightElevation: 0,
-            height: 50,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-              side: BorderSide(color: primaryColor),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.currency_exchange_rounded,
-                  size: 20,
+          onPressed: () {},
+          color: Colors.white,
+          elevation: 0,
+          focusElevation: 0,
+          highlightElevation: 0,
+          height: 50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: primaryColor),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Iconsax.arrow_up_1,
+                color: primaryColor,
+              ),
+              const SizedBox(width: 3),
+              Text(
+                'Deposit',
+                style: GoogleFonts.poppins(
                   color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(width: 3),
-                Text(
-                  'Transfer',
-                  style: GoogleFonts.poppins(
-                    color: primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(width: 3),
+        MaterialButton(
+          onPressed: () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const AddScreen()));
+          },
+          color: Colors.white,
+          elevation: 0,
+          focusElevation: 0,
+          highlightElevation: 0,
+          height: 50,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(color: primaryColor),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.currency_exchange_rounded,
+                size: 20,
+                color: primaryColor,
+              ),
+              const SizedBox(width: 3),
+              Text(
+                'Transfer',
+                style: GoogleFonts.poppins(
+                  color: primaryColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
                 ),
-              ],
-            ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
@@ -223,7 +242,7 @@ Padding _transaction(BuildContext context) {
 
 Padding _history(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.only(left: 10, right: 5,bottom: 10),
+    padding: const EdgeInsets.only(left: 10, right: 5, bottom: 10),
     child: Column(
       children: [
         Row(
@@ -236,10 +255,11 @@ Padding _history(BuildContext context) {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            
           ],
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         Row(
           children: [
             Text(

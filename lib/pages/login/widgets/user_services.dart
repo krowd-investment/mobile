@@ -10,7 +10,14 @@ class UserService {
   static Future<bool> registerUser(Map body) async {
     const url = 'https://funfund.onrender.com/api/user';
     final uri = Uri.parse(url);
-    final headers = {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthController.token}'};
+
+    // final headers = {'Content-Type': 'application/json','Authorization': 'Bearer ${AuthController.token}'};
+
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${AuthController.token}'
+    };
+
     final response = await http.put(
       uri,
       headers: headers,
@@ -20,10 +27,8 @@ class UserService {
     return response.statusCode == 200;
   }
 
-  static Future<http.Response> authenticateBackEnd(
-      var firebaseIdToken) async {
-    const url =
-        'https://funfund.onrender.com/api/authenticate';
+  static Future<http.Response> authenticateBackEnd(var firebaseIdToken) async {
+    const url = 'https://funfund.onrender.com/api/authenticate';
     final headers = {'Authorization': 'Bearer ${AuthController.token}'};
     generalHeaders = headers;
     final uri = Uri.parse(url);
@@ -31,13 +36,11 @@ class UserService {
   }
 
   static Future<http.Response> getUserInfo() async {
-    const url =
-        'https://funfund.onrender.com/api/user';
+    const url = 'https://funfund.onrender.com/api/user';
     final headers = {'Authorization': 'Bearer ${AuthController.token}'};
     final uri = Uri.parse(url);
-    final response  = await http.get(uri, headers: headers);
+    final response = await http.get(uri, headers: headers);
     log(response.body);
     return response;
   }
-  
 }
