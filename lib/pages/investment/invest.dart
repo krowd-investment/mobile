@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:krowd_invesment_footer/models/project.dart';
+import 'package:krowd_invesment_footer/pages/investment/widgets/project_services.dart';
+
 
 class Invest extends StatefulWidget {
   const Invest({super.key});
@@ -38,11 +41,39 @@ class _InvestState extends State<Invest> {
           child: Column(
             children: [
               _field(),
-              _listProject(),
+              _listProject1(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  FutureBuilder<List<Project>> _listProject1() {
+    return FutureBuilder<List<Project>>(
+      future: ProjectServices.fetchProjects(),
+      builder: (BuildContext context, AsyncSnapshot<List<Project>> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Show a loading indicator while the projects are being fetched
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          // Show an error message if there was an error fetching the projects
+          return Text('Error: ${snapshot.error}');
+        } else {
+          // Display the projects once they are fetched
+          List<Project> projects = snapshot.data!;
+          return Container(
+            margin: EdgeInsets.fromLTRB(4.5 * fem, 0 * fem, 5.5 * fem, 0 * fem),
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: projects.map((project) {
+                return _projectEach1(project);
+              }).toList(),
+            ),
+          );
+        }
+      },
     );
   }
 }
@@ -95,13 +126,157 @@ Widget _field() {
 }
 
 Container _listProject() {
+  List<Project> projects = ProjectServices.fetchProjects() as List<Project>;
+
   return Container(
-    // donationf8a (102:946)
     margin: EdgeInsets.fromLTRB(4.5 * fem, 0 * fem, 5.5 * fem, 0 * fem),
     width: double.infinity,
-    child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      _projectEach(),
-    ]),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: projects.map((project) {
+        return _projectEach1(project);
+      }).toList(),
+    ),
+  );
+}
+
+Widget _projectEach1(Project project) {
+  return TextButton(
+    onPressed: () {},
+    style: TextButton.styleFrom(
+      padding: EdgeInsets.zero,
+    ),
+    child: Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        border: Border.all(color: const Color(0xfff6f6f6)),
+        color: Color.fromARGB(255, 94, 22, 22),
+        borderRadius: BorderRadius.circular(18 * fem),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x3f000000),
+            offset: Offset(0 * fem, 4 * fem),
+            blurRadius: 2 * fem,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _part11(project),
+          _part21(project),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget _part11(Project project) {
+  return Column(
+    children: [
+      Container(
+        padding: EdgeInsets.fromLTRB(300 * fem, 8 * fem, 15.45 * fem, 8 * fem),
+        width: double.infinity,
+        height: 142 * fem,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18 * fem),
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(project.image!),
+          ),
+        ),
+      ),
+      // Rest of the code
+    ],
+  );
+}
+
+Container _part21(Project project) {
+  return Container(
+    padding: EdgeInsets.fromLTRB(15.5 * fem, 8 * fem, 12 * fem, 10 * fem),
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      color: Color(0xffffffff),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _titleInvest1(project),
+        SizedBox(
+          height: 10 * fem,
+        ),
+        // Rest of the code
+      ],
+    ),
+  );
+}
+
+Widget _titleInvest1(Project project) {
+  return SizedBox(
+    width: double.infinity,
+    height: 48 * fem,
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 3,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 58.5 * fem, 0 * fem),
+            constraints: BoxConstraints(
+              maxWidth: 204 * fem,
+            ),
+            child: Text(
+              project.projectName!, // Use project title from the Project object
+              style: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 16 * fem,
+                fontWeight: FontWeight.w600,
+                height: 1.5 * fem / fem,
+                color: const Color(0xff000000),
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(0 * fem, 10 * fem, 0 * fem, 9 * fem),
+            child: TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                padding: EdgeInsets.zero,
+              ),
+              child: Container(
+                width: 76 * fem,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(7 * fem),
+                  gradient: const LinearGradient(
+                    begin: Alignment(0, -1),
+                    end: Alignment(0, 1),
+                    colors: <Color>[Color(0xffff607d), Color(0xb2ff607d)],
+                    stops: <double>[0, 1],
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    'Invest',
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 14 * fem,
+                      fontWeight: FontWeight.w600,
+                      height: 1.5 * fem / fem,
+                      color: const Color(0xffffffff),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
   );
 }
 
