@@ -36,9 +36,8 @@ class UserService {
     const url = '${ROOT}user';
     final headers = {'Authorization': 'Bearer ${AuthController.token}'};
     final uri = Uri.parse(url);
-    final response  = await http.get(uri, headers: headers);
+    final response = await http.get(uri, headers: headers);
     log(response.body);
     return response;
   }
-  
 }

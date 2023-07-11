@@ -7,6 +7,8 @@ import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
 import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
 
+import '../../modules/repository/wallet_repo/models/wallet_dto.dart';
+
 class Home extends StatefulWidget {
   final Future<Map<String, dynamic>> user;
   const Home({required this.user, Key? key}) : super(key: key);
@@ -22,21 +24,34 @@ class _MyHomePageState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _header(),
-              _wallet(),
-              _menu(),
-              _mywallet(),
-              _watchlist(),
-            ],
-          ),
-        ),
-      ),
-    );
+    return FutureBuilder<List<WalletDTO>>(
+        future: fetchWalletAndPopulateList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasData) {
+            final walletList = snapshot.data;
+            return Scaffold(
+              body: SafeArea(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _header(),
+                      _wallet(),
+                      _menu(),
+                      _mywallet(walletList),
+                      _watchlist(),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            return const CircularProgressIndicator();
+          }
+        });
   }
 
   static void Function()? _menuIcon() {
@@ -191,7 +206,7 @@ class _MyHomePageState extends State<Home> {
     );
   }
 
-  Container _mywallet() {
+  Container _mywallet(List<WalletDTO>? walletList) {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
       child: Column(
@@ -227,7 +242,7 @@ class _MyHomePageState extends State<Home> {
             height: 142,
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: walletList.length,
+              itemCount: walletList!.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {},
