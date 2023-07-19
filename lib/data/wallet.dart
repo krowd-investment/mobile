@@ -41,7 +41,7 @@ Future<List<WalletDTO>> fetchWalletAndPopulateList() async {
     WalletDTO(
       symbol: wallets.isNotEmpty && wallets[0]!['walletTypeId'] == generalWallet
           ? walletType.elementAt(0)
-          : null,
+          : walletType.elementAt(0),
       name: wallets.isNotEmpty && wallets[0]!['walletTypeId'] == generalWallet
           ? 'Investment'
           : "",
@@ -57,7 +57,7 @@ Future<List<WalletDTO>> fetchWalletAndPopulateList() async {
       symbol:
           wallets.isNotEmpty && wallets[1]!['walletTypeId'] == collectionWallet
               ? walletType.elementAt(1)
-              : null,
+              : walletType.elementAt(1),
       name:
           wallets.isNotEmpty && wallets[1]!['walletTypeId'] == collectionWallet
               ? 'Collection'

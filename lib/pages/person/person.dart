@@ -81,7 +81,8 @@ class PersonSate extends State<Person> {
                                 width: 500.0,
                                 height: 150.0,
                                 decoration: BoxDecoration(
-                                  color: Colors.pink,
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Column(
@@ -125,7 +126,7 @@ class PersonSate extends State<Person> {
                         width: 500.0,
                         height: isVisible ? 220.0 : 150.0,
                         decoration: BoxDecoration(
-                          color: Colors.pink,
+                          color: const Color.fromARGB(255, 135, 135, 135),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: Column(
@@ -586,7 +587,7 @@ class _HeadManageSate extends State<HeadManage> {
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 10,
-                color: Color.fromARGB(255, 240, 3, 82)),
+                color: Color.fromARGB(255, 138, 138, 138)),
           ),
         ),
       );

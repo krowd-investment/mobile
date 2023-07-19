@@ -77,7 +77,7 @@ class _UserProfileState extends State<UserProfileWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 239, 26, 157),
+        backgroundColor: const Color.fromARGB(255, 136, 136, 136),
         leading: BackButton(
           onPressed: () {
             widget.setUpdate();
@@ -94,7 +94,7 @@ class _UserProfileState extends State<UserProfileWidget> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
-          color: Colors.pink,
+          color: Color.fromARGB(255, 137, 137, 137),
         ),
         child: Column(
           children: [

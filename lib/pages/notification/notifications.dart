@@ -78,7 +78,7 @@ class _NotificationsState extends State<Notifications> {
       return buidHeadWallet(
           const Icon(
             Icons.wallet_giftcard,
-            color: Color.fromARGB(255, 177, 41, 41),
+            color: Color.fromARGB(255, 119, 119, 119),
             size: 20,
           ),
           "Invesment Wallet",
@@ -96,7 +96,7 @@ class _NotificationsState extends State<Notifications> {
       return buidHeadWallet(
           const Icon(
             Icons.wallet_rounded,
-            color: Color.fromARGB(255, 240, 39, 156),
+            color: Color.fromARGB(255, 255, 255, 255),
             size: 20,
           ),
           "MoMo Wallet",
@@ -166,7 +166,7 @@ class _NotificationsState extends State<Notifications> {
         height: MediaQuery.of(context).size.height,
         margin: const EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
-          color: Colors.pink,
+          color: const Color.fromARGB(255, 146, 146, 146),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
