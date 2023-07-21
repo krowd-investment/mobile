@@ -5,9 +5,11 @@ import 'package:krowd_invesment_footer/config/const.dart';
 import 'package:krowd_invesment_footer/config/ultility.dart';
 import 'package:krowd_invesment_footer/data/stock.dart';
 import 'package:krowd_invesment_footer/data/wallet.dart';
+import 'package:krowd_invesment_footer/models/project.dart';
 import 'package:krowd_invesment_footer/pages/home/dashboard.dart';
 
 import '../../modules/repository/wallet_repo/models/wallet_dto.dart';
+import '../investment/widgets/project_services.dart';
 
 class Home extends StatefulWidget {
   final Future<Map<String, dynamic>> user;
@@ -433,7 +435,16 @@ class _MyHomePageState extends State<Home> {
                     fontSize: 20, fontWeight: FontWeight.w600),
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DashBoard(
+                        index: 2,
+                      ),
+                    ),
+                  );
+                },
                 child: Text(
                   'View all',
                   style: GoogleFonts.poppins(
@@ -444,66 +455,89 @@ class _MyHomePageState extends State<Home> {
               )
             ],
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: stockPortfolio.length,
-            itemBuilder: (context, index) => InkWell(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                margin: const EdgeInsets.only(top: 12),
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.04),
-                    borderRadius: BorderRadius.circular(12)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 24,
-                          backgroundImage:
-                              NetworkImage('${stockPortfolio[index].iconUrl}'),
-                        ),
-                        const SizedBox(width: 8),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+          FutureBuilder<List<Project>>(
+              future: ProjectServices.fetchProjectsV2(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.hasData) {
+                  final projectList = snapshot.data;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: projectList?.length,
+                    itemBuilder: (context, index) => InkWell(
+                      onTap: () {},
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(top: 12),
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.04),
+                            borderRadius: BorderRadius.circular(12)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${stockPortfolio[index].symbol}',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 24,
+                                  backgroundImage: projectList?[index]
+                                              .image
+                                              .toString() !=
+                                          "string"
+                                      ? NetworkImage(
+                                          '${projectList?[index].image}')
+                                      : const NetworkImage(
+                                          'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/800px-Microsoft_logo.svg.png'),
+                                ),
+                                const SizedBox(width: 8),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${projectList?[index].projectName}',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      'Brand: ${projectList?[index].brand}',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 9,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            Text(
-                              '${stockPortfolio[index].name}',
-                              style: GoogleFonts.poppins(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
-                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${projectList?[index].projectId}',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  '${projectList?[index].status}',
+                                  style: GoogleFonts.poppins(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${stockPortfolio[index].price}',
-                          style: GoogleFonts.poppins(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          '${stockPortfolio[index].change}',
-                          style: GoogleFonts.poppins(
-                              fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-          )
+                  );
+                } else if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              })
         ],
       ),
     );
