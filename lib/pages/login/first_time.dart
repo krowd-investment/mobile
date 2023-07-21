@@ -199,9 +199,7 @@ class _FirstTimeState extends State<FirstTime> {
   }
 
   Future<void> submitData() async {
-    // Get the data from form = getter
 
-    //submit data to the server
     final isSuccess = await UserService.registerUser(userModel);
 
     // show success ot fail message based on status
