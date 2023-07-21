@@ -1,7 +1,10 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:krowd_invesment_footer/pages/notification/widgets/head_wallet_widet.dart';
-import 'package:krowd_invesment_footer/pages/notification/widgets/items_wallet_widget.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:krowd_invesment_footer/pages/notification/services/notification_services/notification_services/notification_services.dart';
+
+import 'model/transaction_person_to_wallet.dart';
+import 'model/transaction_response.dart';
 
 class Notifications extends StatefulWidget {
   const Notifications({Key? key}) : super(key: key);
@@ -58,103 +61,6 @@ class _NotificationsState extends State<Notifications> {
     });
   }
 
-  List<String> categories = [
-    'Temp Wallet',
-    'Invesment Wallet',
-    'Service Wallet',
-    'MoMo Wallet'
-  ];
-  Widget getHeadWiget() {
-    if (selectedIndex == 0) {
-      return buidHeadWallet(
-          const Icon(
-            Icons.wallet,
-            color: Colors.black,
-            size: 20,
-          ),
-          "Temp Wallet",
-          "\$112,550.00");
-    } else if (selectedIndex == 1) {
-      return buidHeadWallet(
-          const Icon(
-            Icons.wallet_giftcard,
-            color: Color.fromARGB(255, 119, 119, 119),
-            size: 20,
-          ),
-          "Invesment Wallet",
-          "\$112,550.00");
-    } else if (selectedIndex == 2) {
-      return buidHeadWallet(
-          const Icon(
-            Icons.wallet_membership,
-            color: Color.fromARGB(255, 70, 219, 102),
-            size: 20,
-          ),
-          "Service Wallet",
-          "\$112,550.00");
-    } else {
-      return buidHeadWallet(
-          const Icon(
-            Icons.wallet_rounded,
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 20,
-          ),
-          "MoMo Wallet",
-          "\$112,550.00");
-    }
-  }
-
-  List<Widget> items = [
-    buildItemsWallet(
-        "Tranfer to invesment wallet", "12/6/2023", "+ 100000", true),
-    buildItemsWallet("Deposit from Temp wallet", "12/6/2023", "- 50000", false),
-    buildItemsWallet("Tranfer to MoMo wallet", "12/6/2023", "+ 300000", true),
-  ];
-
-  List<Widget> getSelectedItems() {
-    if (selectedIndex == 0) {
-      if (notificationTitle != null &&
-          notificationMsg != null &&
-          formattedSentTime != null) {
-        Widget newNotify = buildItemsWallet(
-            notificationTitle!, formattedSentTime!, notificationMsg!, true);
-        items.add(newNotify);
-        return items;
-      }
-      return items;
-    } else if (selectedIndex == 1) {
-      if (notificationTitle != null &&
-          notificationMsg != null &&
-          formattedSentTime != null) {
-        Widget newNotify = buildItemsWallet(
-            notificationTitle!, formattedSentTime!, notificationMsg!, true);
-        items.add(newNotify);
-        return items;
-      }
-      return items;
-    } else if (selectedIndex == 2) {
-      if (notificationTitle != null &&
-          notificationMsg != null &&
-          formattedSentTime != null) {
-        Widget newNotify = buildItemsWallet(
-            notificationTitle!, formattedSentTime!, notificationMsg!, true);
-        items.add(newNotify);
-        return items;
-      }
-      return items;
-    } else {
-      if (notificationTitle != null &&
-          notificationMsg != null &&
-          formattedSentTime != null) {
-        Widget newNotify = buildItemsWallet(
-            notificationTitle!, formattedSentTime!, notificationMsg!, true);
-        items.add(newNotify);
-        return items;
-      }
-      return items;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,90 +72,118 @@ class _NotificationsState extends State<Notifications> {
         height: MediaQuery.of(context).size.height,
         margin: const EdgeInsets.only(top: 5),
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 146, 146, 146),
+          color: const Color.fromARGB(255, 208, 207, 207),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(
-                    categories.length,
-                    (index) => GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectedIndex = index;
-                        });
-                      },
-                      child: SizedBox(
-                        width: 125,
-                        height: 40,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Text(
-                            categories[index],
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                              color: index == selectedIndex
-                                  ? Colors.blue
-                                  : Colors.black,
-                            ),
-                          ),
-                        ),
-                      ),
+              child: SizedBox(
+                width: 125,
+                height: 40,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Text(
+                    "Personal To Project Wallet",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue,
                     ),
                   ),
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.only(top: 10),
-              width: 500,
-              height: 90,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: ListView.builder(
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  final item = getHeadWiget();
-                  return item;
-                },
-              ),
-            ),
             const SizedBox(
-              height: 5,
+              height: 20,
             ),
-            Container(
-              width: 500,
-              height: 255,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: getSelectedItems().length,
-                  itemBuilder: (context, index) {
-                    return getSelectedItems()[index];
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider(
-                      color: Colors.black,
+            FutureBuilder<TransactionResponse?>(
+                future: NotificationServices.fetchTransaction(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (snapshot.hasData) {
+                    final transactionResponse = snapshot.data;
+                    return Container(
+                      width: 500,
+                      height: 500,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: transactionResponse!
+                                  .fromPersonalToProjectWallet!.isNotEmpty
+                              ? ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount: transactionResponse!
+                                      .fromPersonalToProjectWallet!.length,
+                                  itemBuilder: (context, index) {
+                                    TransactionPersonToWallet transaction =
+                                        transactionResponse
+                                                .fromPersonalToProjectWallet![
+                                            index];
+                                    return ListTile(
+                                      title: Text('${transaction.description}',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black)),
+                                      subtitle: Row(
+                                        children: [
+                                          Expanded(
+                                            flex: 2,
+                                            child: Text(
+                                                '${transaction.createdAt}',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black)),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                                '+ ${transaction.amount}',
+                                                style: GoogleFonts.poppins(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: const Color.fromARGB(
+                                                        255, 81, 255, 0))),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const Divider(
+                                      color: Colors.black,
+                                    );
+                                  },
+                                )
+                              : Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(52, 20, 0, 0),
+                                  child: Text(
+                                      'Sorry You Are Not Have Transaction Yet',
+                                      style: GoogleFonts.poppins(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: const Color.fromARGB(
+                                              255, 0, 0, 0))),
+                                )),
                     );
-                  },
-                ),
-              ),
-            ),
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                })
           ],
         ),
       ),

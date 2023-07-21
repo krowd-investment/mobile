@@ -82,7 +82,7 @@ class PersonSate extends State<Person> {
                                 height: 150.0,
                                 decoration: BoxDecoration(
                                   color:
-                                      const Color.fromARGB(255, 255, 255, 255),
+                                      const Color.fromARGB(255, 201, 201, 201),
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 child: Column(
@@ -126,7 +126,7 @@ class PersonSate extends State<Person> {
                         width: 500.0,
                         height: isVisible ? 220.0 : 150.0,
                         decoration: BoxDecoration(
-                          color: const Color.fromARGB(255, 135, 135, 135),
+                          color: const Color.fromARGB(255, 201, 201, 201),
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         child: Column(
@@ -164,7 +164,7 @@ class PersonSate extends State<Person> {
                         margin: const EdgeInsets.fromLTRB(10, 1, 10, 10),
                         height: 100,
                         decoration: BoxDecoration(
-                          color: Colors.pink,
+                          color: const Color.fromARGB(255, 201, 201, 201),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const HeadExtension(),
