@@ -7,8 +7,9 @@ import 'package:krowd_invesment_footer/pages/investment/widgets/project_services
 import 'package:percent_indicator/percent_indicator.dart';
 
 class ProjectDetail extends StatefulWidget {
-  const ProjectDetail(this.project, {super.key});
-  final Project project;
+
+  ProjectDetail(this.project, {super.key});
+  Project project;
 
   @override
   State<ProjectDetail> createState() => _ProjectDetailState();
@@ -20,8 +21,6 @@ class _ProjectDetailState extends State<ProjectDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final Project project = widget.project;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Invest'),
@@ -31,11 +30,11 @@ class _ProjectDetailState extends State<ProjectDetail> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              image(project),
-              projectTitle(project),
-              detail(project),
-              description(project),
-              investNow(project),
+              image(),
+              projectTitle(),
+              detail(),
+              description(),
+              investNow(),
             ],
           ),
         ),
@@ -43,7 +42,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
     );
   }
 
-  Widget image(Project project) {
+  Widget image() {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
       child: Row(
@@ -90,8 +89,8 @@ class _ProjectDetailState extends State<ProjectDetail> {
     );
   }
 
-  Widget projectTitle(Project project) {
-    String endDate = project.endDate!.substring(0, 10);
+  Widget projectTitle() {
+    String endDate = widget.project.endDate!.substring(0, 10);
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 12, 24, 0),
@@ -102,7 +101,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
             children: [
               Expanded(
                 child: Text(
-                  '${project.projectName}',
+                  '${widget.project.projectName}',
                   style: TextStyle(fontSize: 20, color: Colors.blue[700]),
                 ),
               ),
@@ -117,7 +116,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
               Expanded(
                 flex: 1,
                 child: Text(
-                  '${project.areaName}',
+                  '${widget.project.areaName}',
                   textAlign: TextAlign.start,
                   style: const TextStyle(
                     fontFamily: 'Lexend Deca',
@@ -130,7 +129,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
               Expanded(
                 flex: 1,
                 child: Text(
-                  '${project.fieldName}',
+                  '${widget.project.fieldName}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontFamily: 'Lexend Deca',
@@ -160,7 +159,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
     );
   }
 
-  Widget detail(Project project) {
+  Widget detail() {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 24, 0),
       child: InkWell(
@@ -201,7 +200,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                                   child: Align(
                                     alignment: const AlignmentDirectional(0, 0),
                                     child: Text(
-                                      '${project.numberOfStage}',
+                                      '${widget.project.numberOfStage}',
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -215,7 +214,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                                   child: Align(
                                     alignment: const AlignmentDirectional(0, 0),
                                     child: Text(
-                                      '${project.mutiplier}',
+                                      '${widget.project.mutiplier}',
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -229,7 +228,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                                   child: Align(
                                     alignment: const AlignmentDirectional(0, 0),
                                     child: Text(
-                                      '${project.duration}',
+                                      '${widget.project.duration}',
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -242,14 +241,14 @@ class _ProjectDetailState extends State<ProjectDetail> {
                     ),
                   ),
                   CircularPercentIndicator(
-                    percent: project.capital! / (project.targetCapital!),
+                    percent: widget.project.capital! / (widget.project.targetCapital!),
                     radius: 50,
                     lineWidth: 10,
                     animation: true,
                     progressColor: Colors.blueAccent,
                     backgroundColor: Colors.grey,
                     center: Text(
-                      '${project.capital! / (project.targetCapital!)}%',
+                      '${widget.project.capital! / (widget.project.targetCapital!)}%',
                     ),
                   ),
                 ],
@@ -261,7 +260,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
     );
   }
 
-  Widget description(Project project) {
+  Widget description() {
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -287,7 +286,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                     child: Html(
-                      data: "${project.projectDescription}",
+                      data: "${widget.project.projectDescription}",
                     ),
                   ),
                 ),
@@ -299,7 +298,7 @@ class _ProjectDetailState extends State<ProjectDetail> {
     );
   }
 
-  Widget investNow(Project project) {
+  Widget investNow() {
     bool isDialogShown = false;
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(100, 10, 100, 20),
@@ -380,9 +379,11 @@ class _ProjectDetailState extends State<ProjectDetail> {
     final isSuccess = await ProjectServices.submitInvestment(investModel);
     // show success ot fail message based on status
     if (isSuccess) {
+      updateDataOnServer(widget.project.projectId!);
       amounInvestController.text = '';
       showSuccessMessage('Invest successfully');
     } else {
+      // ignore: use_build_context_synchronously
       showErroMessage(context, message: 'Invest Failed');
     }
     
@@ -403,6 +404,15 @@ class _ProjectDetailState extends State<ProjectDetail> {
       backgroundColor: Colors.red,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+ Future<void> updateDataOnServer(int id) async  {
+    final isSuccess =  await ProjectServices.synchronizeDataOnServer(id);
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        widget.project = isSuccess;
+      });
+    });
   }
 
   Map get investModel {
