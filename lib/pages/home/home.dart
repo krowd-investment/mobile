@@ -500,12 +500,20 @@ class _MyHomePageState extends State<Home> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.w600),
                                     ),
-                                    Text(
-                                      'Brand: ${projectList?[index].brand}',
-                                      style: GoogleFonts.poppins(
-                                          fontSize: 9,
-                                          fontWeight: FontWeight.w400),
-                                    ),
+                                    projectList?[index].brand.toString() ==
+                                            "NOBRAND"
+                                        ? Text(
+                                            'No Brand',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        : Text(
+                                            '${projectList?[index].brand}',
+                                            style: GoogleFonts.poppins(
+                                                fontSize: 9,
+                                                fontWeight: FontWeight.w400),
+                                          ),
                                   ],
                                 )
                               ],
