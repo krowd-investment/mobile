@@ -7,6 +7,8 @@ import 'package:krowd_invesment_footer/models/project.dart';
 import 'package:krowd_invesment_footer/modules/authentication/auth_controller.dart';
 import 'package:krowd_invesment_footer/pages/login/widgets/user_services.dart';
 
+import '../../../modules/authentication/auth_controller.dart';
+
 class ProjectServices {
   static const String apiROOT = 'https://funfund.onrender.com/api/projects/getAll';
 
@@ -18,7 +20,6 @@ class ProjectServices {
     log(response.body);
     return response;
   }
-
 
   static Future<List<Project>> fetchProjects() async {
     const String url = apiROOT;
