@@ -39,7 +39,7 @@ class _MyHomePageState extends State<Home> {
                   child: Column(
                     children: [
                       _header(),
-                      _wallet(),
+                      _wallet(walletList),
                       _menu(),
                       _mywallet(walletList),
                       _watchlist(),
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<Home> {
     );
   }
 
-  Container _wallet() {
+  Container _wallet(List<WalletDTO>? walletList) {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Column(children: [
@@ -117,7 +117,9 @@ class _MyHomePageState extends State<Home> {
         RichText(
           text: TextSpan(children: [
             TextSpan(
-              text: '10.000.000,0',
+              text: walletList![0].price != null
+                  ? walletList[0].price.toString()
+                  : "1000000",
               style: GoogleFonts.poppins(
                   color: Colors.black87,
                   fontSize: 30,
