@@ -1,9 +1,9 @@
+import 'package:intl/intl.dart';
 import 'package:krowd_invesment_footer/config/const.dart';
 import 'package:krowd_invesment_footer/modules/repository/wallet_type_repo/models/wallet_type_dto.dart';
 
 import '../modules/repository/wallet_repo/models/wallet_dto.dart';
 import '../pages/wallet/widgets/wallet_services.dart';
-import 'package:intl/intl.dart';
 
 List<WalletDTO> walletList = [];
 List<Map<String, dynamic>?> wallets = [];
@@ -73,8 +73,8 @@ Future<List<WalletDTO>> fetchWalletAndPopulateList() async {
     WalletDTO(
       symbol: walletType.elementAt(2),
       name: 'Service',
-      price: '1.000.000,0 VND',
-      change: '2.20(+3.60%)',
+      price: '0 VND',
+      change: '0+',
       color: '#00a6fb',
       iconUrl:
           'https://cdn2.iconfinder.com/data/icons/green-business-icons-1/1500/money_notes_card_wallet_billfold_holder_business_finance-512.png',

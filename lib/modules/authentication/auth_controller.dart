@@ -18,7 +18,6 @@ class AuthController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
   Rx<Response> authenticateBody = Rx<Response>(const Response());
 
-
   static dynamic token;
 
   @override
@@ -26,7 +25,7 @@ class AuthController extends GetxController {
     super.onReady();
     _user = Rx<User?>(auth.currentUser);
     _user.bindStream(auth.userChanges());
-    // ever(_user, _initialScreen);
+    ever(_user, _initialScreen);
   }
 
   _initialScreen(User? user) async {
