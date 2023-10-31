@@ -22,7 +22,6 @@ class _InvestState extends State<Invest> {
   void _onPageChanged(int index) {
     setState(() {
       _currentIndex = index;
-      _listProject1(context);
     });
   }
 
@@ -71,13 +70,11 @@ class _InvestState extends State<Invest> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: projects.map((project) {
-              return Column(
-                children: [
-                  _projectEach1(project, context),
-                  const SizedBox(height: 15.0),
-                ],
-              );
-            }).toList(),
+                const SizedBox(
+                  height: 20,
+                );
+                return _projectEach1(project, context);
+              }).toList(),
             ),
           );
         }
@@ -148,7 +145,15 @@ Widget _projectEach1(Project project, BuildContext context) {
       width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(color: const Color(0xfff6f6f6)),
-        color: const Color.fromARGB(255, 253, 253, 253),
+        color: const Color.fromARGB(255, 94, 22, 22),
+        borderRadius: BorderRadius.circular(18 * fem),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0x3f000000),
+            offset: Offset(0 * fem, 4 * fem),
+            blurRadius: 2 * fem,
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -177,6 +182,7 @@ Widget _part11(Project project) {
           ),
         ),
       ),
+      // Rest of the code
     ],
   );
 }
@@ -277,7 +283,7 @@ Widget _titleInvest1(Project project) {
 Widget sideBar1(Project project) {
   double invested = project.capital! / 1000000;
   double target = project.targetCapital! / 1000000;
-  if(target == 0){
+  if (target == 0) {
     target = 1;
   }
   return Column(
@@ -326,7 +332,7 @@ Widget sideBar1(Project project) {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           LinearProgressIndicator(
-            value: invested/target,
+            value: invested / target,
             // value: 12/100,
             semanticsLabel: 'Linear progress indicator',
           ),
@@ -508,106 +514,107 @@ Widget lastRowProject1(Project project) {
   );
 }
 
-// Widget lastRowProject() {
-//   return Row(
-//     mainAxisAlignment: MainAxisAlignment.spaceAround,
-//     children: [
-//       SizedBox(
-//         height: 25 * fem,
-//         child: Row(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Container(
-//               margin:
-//                   EdgeInsets.fromLTRB(0 * fem, 0 * fem, 23.31 * fem, 0 * fem),
-//               width: 66.2 * fem,
-//               height: double.infinity,
-//               decoration: BoxDecoration(
-//                 color: const Color(0x33407bff),
-//                 borderRadius: BorderRadius.circular(9 * fem),
-//                 boxShadow: [
-//                   BoxShadow(
-//                     color: const Color(0x19000000),
-//                     offset: Offset(0 * fem, 2 * fem),
-//                     blurRadius: 8 * fem,
-//                   ),
-//                 ],
-//               ),
-//               child: Center(
-//                 child: Text(
-//                   'EdTech',
-//                   style: TextStyle(
-//                     fontFamily: 'DM Sans',
-//                     fontSize: 14 * fem,
-//                     fontWeight: FontWeight.w500,
-//                     height: 1.3025 * fem / fem,
-//                     color: const Color(0xff0052ce),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//       Container(
-//         // kinvestorsDh8 (102:931)
-//         margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 27.96 * fem, 0 * fem),
-//         child: RichText(
-//           text: TextSpan(
-//             style: TextStyle(
-//               fontFamily: 'DM Sans',
-//               fontSize: 14 * fem,
-//               fontWeight: FontWeight.w500,
-//               height: 1.3025 * fem / fem,
-//               color: const Color(0xff78858f),
-//             ),
-//             children: [
-//               TextSpan(
-//                 text: '117K',
-//                 style: TextStyle(
-//                   fontFamily: 'DM Sans',
-//                   fontSize: 14 * fem,
-//                   fontWeight: FontWeight.w500,
-//                   height: 1.3025 * fem / fem,
-//                   color: const Color(0xff0052ce),
-//                 ),
-//               ),
-//               const TextSpan(
-//                 text: ' investor’s',
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       Container(
-//         margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
-//         child: RichText(
-//           text: TextSpan(
-//             style: TextStyle(
-//               fontFamily: 'DM Sans',
-//               fontSize: 14 * fem,
-//               fontWeight: FontWeight.w500,
-//               height: 1.3025 * fem / fem,
-//               color: const Color(0xff78858f),
-//             ),
-//             children: [
-//               TextSpan(
-//                 text: '28',
-//                 style: TextStyle(
-//                   fontFamily: 'DM Sans',
-//                   fontSize: 14 * fem,
-//                   fontWeight: FontWeight.w500,
-//                   height: 1.3025 * fem / fem,
-//                   color: const Color(0xff0052ce),
-//                 ),
-//               ),
-//               const TextSpan(
-//                 text: ' days left',
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     ],
-//   );
-// }
+Widget lastRowProject() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
+    children: [
+      SizedBox(
+        height: 25 * fem,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin:
+                  EdgeInsets.fromLTRB(0 * fem, 0 * fem, 23.31 * fem, 0 * fem),
+              width: 66.2 * fem,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: const Color(0x33407bff),
+                borderRadius: BorderRadius.circular(9 * fem),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0x19000000),
+                    offset: Offset(0 * fem, 2 * fem),
+                    blurRadius: 8 * fem,
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Text(
+                  'EdTech',
+                  style: TextStyle(
+                    fontFamily: 'DM Sans',
+                    fontSize: 14 * fem,
+                    fontWeight: FontWeight.w500,
+                    height: 1.3025 * fem / fem,
+                    color: const Color(0xff0052ce),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        // kinvestorsDh8 (102:931)
+        margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 27.96 * fem, 0 * fem),
+        child: RichText(
+          text: TextSpan(
+            style: TextStyle(
+              fontFamily: 'DM Sans',
+              fontSize: 14 * fem,
+              fontWeight: FontWeight.w500,
+              height: 1.3025 * fem / fem,
+              color: const Color(0xff78858f),
+            ),
+            children: [
+              TextSpan(
+                text: '117K',
+                style: TextStyle(
+                  fontFamily: 'DM Sans',
+                  fontSize: 14 * fem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.3025 * fem / fem,
+                  color: const Color(0xff0052ce),
+                ),
+              ),
+              const TextSpan(
+                text: ' investor’s',
+              ),
+            ],
+          ),
+        ),
+      ),
+      Container(
+        // daysleft7AE (102:932)
+        margin: EdgeInsets.fromLTRB(0 * fem, 2 * fem, 0 * fem, 0 * fem),
+        child: RichText(
+          text: TextSpan(
+            style: TextStyle(
+              fontFamily: 'DM Sans',
+              fontSize: 14 * fem,
+              fontWeight: FontWeight.w500,
+              height: 1.3025 * fem / fem,
+              color: const Color(0xff78858f),
+            ),
+            children: [
+              TextSpan(
+                text: '28',
+                style: TextStyle(
+                  fontFamily: 'DM Sans',
+                  fontSize: 14 * fem,
+                  fontWeight: FontWeight.w500,
+                  height: 1.3025 * fem / fem,
+                  color: const Color(0xff0052ce),
+                ),
+              ),
+              const TextSpan(
+                text: ' days left',
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}

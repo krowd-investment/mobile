@@ -108,6 +108,9 @@ class _NotificationsState extends State<Notifications> {
                     return Text('Error: ${snapshot.error}');
                   } else if (snapshot.hasData) {
                     final transactionResponse = snapshot.data;
+
+                    List<TransactionPersonToWallet>? transaction =
+                        transactionResponse?.fromPersonalToProjectWallet;
                     return Container(
                       width: 500,
                       height: 500,
@@ -117,20 +120,15 @@ class _NotificationsState extends State<Notifications> {
                       ),
                       child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: transactionResponse!
-                                  .fromPersonalToProjectWallet!.isNotEmpty
+                          child: transaction!.isNotEmpty
                               ? ListView.separated(
                                   shrinkWrap: true,
                                   physics: const ClampingScrollPhysics(),
-                                  itemCount: transactionResponse!
-                                      .fromPersonalToProjectWallet!.length,
+                                  itemCount: transaction!.length,
                                   itemBuilder: (context, index) {
-                                    TransactionPersonToWallet transaction =
-                                        transactionResponse
-                                                .fromPersonalToProjectWallet![
-                                            index];
                                     return ListTile(
-                                      title: Text('${transaction.description}',
+                                      title: Text(
+                                          '${transaction[index].description}',
                                           style: GoogleFonts.poppins(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w400,
@@ -140,7 +138,7 @@ class _NotificationsState extends State<Notifications> {
                                           Expanded(
                                             flex: 2,
                                             child: Text(
-                                                '${transaction.createdAt}',
+                                                '${transaction[index].createdAt}',
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,
@@ -149,7 +147,7 @@ class _NotificationsState extends State<Notifications> {
                                           Expanded(
                                             flex: 1,
                                             child: Text(
-                                                '+ ${transaction.amount}',
+                                                '+ ${transaction[index].amount}',
                                                 style: GoogleFonts.poppins(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.bold,

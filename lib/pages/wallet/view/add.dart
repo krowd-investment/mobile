@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:krowd_invesment_footer/data/add_date.dart';
+import 'package:krowd_invesment_footer/pages/wallet/widgets/wallet_services.dart';
 
 class AddScreen extends StatefulWidget {
   const AddScreen({super.key});
@@ -22,15 +23,15 @@ class AddScreenState extends State<AddScreen> {
   TextEditingController amountController = TextEditingController();
   FocusNode amount_ = FocusNode();
   final List<String> _walletTo = [
-    "Ví chung",
-    "Ví thu tiền",
-    "Ví dịch vụ",
+    "General Wallet",
+    "Collection Wallet",
+    "Services Wallet",
   ];
 
   final List<String> _walletFrom = [
-    "Ví chung",
-    "Ví thu tiền",
-    "Ví dịch vụ",
+    "General Wallet",
+    "Collection Wallet",
+    "Services Wallet",
   ];
 
   final List<String> _type = [
@@ -107,8 +108,10 @@ class AddScreenState extends State<AddScreen> {
   GestureDetector save() {
     return GestureDetector(
       onTap: () {
-        var add = AddData(transactionType!, amountController.text as double,
+        var add = AddData(transactionType!, double.parse(amountController.text),
             date, expalin_C.text, from!, to!);
+        WalletService.tranferMoney(
+            from!, to!, double.parse(amountController.text));
         box.add(add);
         Navigator.of(context).pop();
       },
